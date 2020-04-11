@@ -3,5 +3,7 @@ defmodule ScholeWeb.Schema.ContentTypes do
 
   object :project do
     field :id, :id
+    field :slug, :string
+    field :title, :string
   end
 end

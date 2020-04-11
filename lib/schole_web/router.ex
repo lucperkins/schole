@@ -22,8 +22,8 @@ defmodule ScholeWeb.Router do
       schema: Schema,
       interface: :playground
 
-    #forward "/", Absinthe.Plug,
-    #  schema: Schema
+    forward "/", Absinthe.Plug,
+      schema: Schema
 
     #get "/", PageController, :index
   end

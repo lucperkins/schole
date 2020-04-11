@@ -1,5 +1,9 @@
 defmodule ScholeWeb.Resolvers.Projects do
+  alias Schole.Projects
+
   def list_projects(_parent, _args, _resolution) do
-    {:ok, []}
+    projects = Projects.list_projects
+
+    {:ok, projects}
   end
 end
