@@ -43,7 +43,8 @@ defmodule Schole.MixProject do
       {:inch_ex, github: "rrrene/inch_ex", only: [:dev, :test]},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:earmark, "~> 1.4.3", only: [:dev]},
-      {:ex_doc, "~> 0.21.3", only: [:dev]}
+      {:ex_doc, "~> 0.21.3", only: [:dev]},
+      {:absinthe, "~> 1.5.0-rc.5", override: true}
     ]
   end
 
