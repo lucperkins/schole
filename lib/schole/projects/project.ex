@@ -10,7 +10,7 @@ defmodule Schole.Projects.Project do
   schema "projects" do
     field :slug, :string
     field :title, :string, null: false
-    field :metadata, :map
+    field :metadata, :map, default: %{}
   end
 
   def create_changeset(%Project{} = project, attrs \\ %{}) do
