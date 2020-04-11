@@ -8,6 +8,7 @@ defmodule Schole.Repo.Migrations.CreateProjects do
       add :metadata, :map, default: %{}
     end
 
+    create unique_index(:projects, [:title])
     create unique_index(:projects, [:slug])
   end
 end
