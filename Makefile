@@ -1,10 +1,13 @@
-.PHONY: check clean deps docs routes run shell test
+.PHONY: check clean db-reset deps docs routes run shell test
 
 check:
 	@mix check
 
 clean:
 	@mix clean
+
+db-reset:
+	@mix ecto.reset
 
 deps:
 	@mix deps.get

@@ -13,35 +13,31 @@ defmodule Schole.Projects.ProjectsTest do
     alias Schole.Projects.Project
 
     test "list_projects/0 returns an empty list" do
-      assert [] == Projects.list_projects
+      assert [] == Projects.all
     end
 
     test "create_project/1 successfully creates project" do
-      assert {:ok, %Project{} = project} = Projects.create_project(@valid)
+      assert {:ok, %Project{} = project} = Projects.create(@valid)
       assert project.title == "Some title"
       assert project.slug == "some-slug"
       assert project.metadata == %{foo: "bar"}
     end
 
     test "create_project/1 fails on non-unique title, event with different slugs" do
-      assert {:ok, %Project{} = project} = Projects.create_project(@valid)
-      assert {:error, %Ecto.Changeset{} = changeset} = Projects.create_project(@same_title)
+      assert {:ok, %Project{} = project} = Projects.create(@valid)
+      assert {:error, %Ecto.Changeset{} = changeset} = Projects.create(@same_title)
       expect_invalid(changeset, %{title: ["a project with that title already exists"]})
     end
 
     test "create_project/1 fails on non-unique slug, event with different titles" do
-      assert {:ok, %Project{} = project} = Projects.create_project(@valid)
-      assert {:error, %Ecto.Changeset{} = changeset} = Projects.create_project(@same_slug)
+      assert {:ok, %Project{} = project} = Projects.create(@valid)
+      assert {:error, %Ecto.Changeset{} = changeset} = Projects.create(@same_slug)
       expect_invalid(changeset, %{slug: ["a project with that slug already exists"]})
     end
 
     test "create_project/1 automatically creates slug" do
-      assert {:ok, %Project{} = project} = Projects.create_project(@no_slug)
+      assert {:ok, %Project{} = project} = Projects.create(@no_slug)
       assert project.slug == "some-title"
-    end
-
-    test "delete_project/1 can't delete project that doesn't exist" do
-      assert {:error, :not_found} = Projects.delete_project(@non_existent_id)
     end
   end
 end
