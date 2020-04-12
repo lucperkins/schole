@@ -9,9 +9,9 @@ defmodule ScholeWeb.Schema.JSONScalar do
 
   scalar :json, name: "Json" do
     description("""
-    The `Json` scalar type represents arbitrary json string data, represented as UTF-8
-    character sequences. The Json type is most often used to represent a free-form
-    human-readable json string.
+    The `Json` scalar type represents arbitrary JSON string data, represented as UTF-8
+    character sequences. The `Json` type is most often used to represent a free-form
+    human-readable JSON string.
     """)
 
     serialize(&encode/1)

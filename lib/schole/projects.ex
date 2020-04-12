@@ -13,6 +13,10 @@ defmodule Schole.Projects do
     end
   end
 
+  def find_project(args \\ %{}) do
+    Repo.get_by(Project, args)
+  end
+
   def create_project(attrs \\ %{}) do
     %Project{}
     |> Project.create_changeset(attrs)
