@@ -21,4 +21,11 @@ defmodule ScholeWeb.Resolvers.Helpers do
       {:error, %Changeset{} = changeset} -> {:error, format_errors(changeset)}
     end
   end
+
+  def wrapped_call(fun, msg) do
+    case fun.() do
+      nil -> {:error, msg}
+      result -> {:ok, result}
+    end
+  end
 end
