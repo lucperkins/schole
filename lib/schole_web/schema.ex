@@ -2,21 +2,21 @@ defmodule ScholeWeb.Schema do
   use Absinthe.Schema
   import_types ScholeWeb.Schema.ContentTypes
 
-  alias ScholeWeb.Resolvers
+  alias ScholeWeb.Resolvers.ProjectsResolver
 
   query do
     @desc "Get all projects"
     field :projects, list_of(:project) do
-      resolve &Resolvers.Projects.list_projects/3
+      resolve &ProjectsResolver.all/3
     end
 
-    @desc "Get a project by some combination of ID, title, and slug"
-    field :get_project, :project do
+    @desc "Find a project by some combination of ID, title, and slug"
+    field :find_project, :project do
       arg :id, :id
       arg :title, :string
       arg :slug, :string
 
-      resolve &Resolvers.Projects.get_project/3
+      resolve &ProjectsResolver.find/3
     end
   end
 
@@ -27,7 +27,7 @@ defmodule ScholeWeb.Schema do
       arg :slug, :string
       arg :metadata, :json
 
-      resolve &Resolvers.Projects.create_project/3
+      resolve &ProjectsResolver.create/3
     end
   end
 end

@@ -2,22 +2,15 @@ defmodule Schole.Projects do
   alias Schole.Repo
   alias Schole.Projects.Project
 
-  def list_projects do
+  def all() do
     Repo.all(Project)
   end
 
-  def get_project(id) do
-    case Repo.get(Project, id) do
-      nil -> {:error, :not_found}
-      project -> {:ok, project}
-    end
-  end
-
-  def find_project(args \\ %{}) do
+  def find(args \\ %{}) do
     Repo.get_by(Project, args)
   end
 
-  def create_project(attrs \\ %{}) do
+  def create(attrs \\ %{}) do
     %Project{}
     |> Project.create_changeset(attrs)
     |> Repo.insert()
