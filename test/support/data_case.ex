@@ -24,7 +24,6 @@ defmodule Schole.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import Schole.DataCase
-      import Schole.Factory
     end
   end
 
