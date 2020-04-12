@@ -17,8 +17,8 @@ defmodule Schole.Projects.Project do
     project
     |> cast(attrs, @required ++ @optional)
     |> validate_required(@required)
-    |> unique_constraint(:title, name: :projects_title_index)
-    |> unique_constraint(:slug, name: :projects_slug_index)
+    |> unique_constraint(:title, name: :projects_title_index, message: "a project with that title already exists")
+    |> unique_constraint(:slug, name: :projects_slug_index, message: "a project with that slug already exists")
     |> set_project_slug()
   end
 

@@ -26,13 +26,13 @@ defmodule Schole.Projects.ProjectsTest do
     test "create_project/1 fails on non-unique title, event with different slugs" do
       assert {:ok, %Project{} = project} = Projects.create_project(@valid)
       assert {:error, %Ecto.Changeset{} = changeset} = Projects.create_project(@same_title)
-      expect_invalid(changeset, %{title: ["has already been taken"]})
+      expect_invalid(changeset, %{title: ["a project with that title already exists"]})
     end
 
     test "create_project/1 fails on non-unique slug, event with different titles" do
       assert {:ok, %Project{} = project} = Projects.create_project(@valid)
       assert {:error, %Ecto.Changeset{} = changeset} = Projects.create_project(@same_slug)
-      expect_invalid(changeset, %{slug: ["has already been taken"]})
+      expect_invalid(changeset, %{slug: ["a project with that slug already exists"]})
     end
 
     test "create_project/1 automatically creates slug" do
