@@ -6,7 +6,6 @@ defmodule Schole.Projects.Project do
 
   @required ~w(title)a
   @optional ~w(metadata slug)a
-  #@unique ~w(slug title)
 
   schema "projects" do
     field :slug, :string
