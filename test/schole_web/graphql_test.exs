@@ -8,4 +8,10 @@ defmodule ScholeWeb.GraphQLTest do
 
     assert result == {:ok, []}
   end
+
+  test "create project successful" do
+    project = build(:valid_project)
+
+    assert project.title == "Some project name"
+  end
 end

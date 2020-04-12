@@ -5,7 +5,8 @@ defmodule Schole.Factory do
 
   def valid_project_factory do
     %Project{
-      title: "My Project",
+      title: "Some project name",
+      slug: "some-slug",
       metadata: %{
         foo: "bar",
         baz: 100
