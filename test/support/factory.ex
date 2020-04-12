@@ -3,7 +3,7 @@ defmodule Schole.Factory do
 
   alias Schole.Projects.Project
 
-  def valid_project_factory do
+  def project_factory do
     %Project{
       title: "Some project name",
       slug: "some-slug",

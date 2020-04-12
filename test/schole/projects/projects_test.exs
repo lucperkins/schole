@@ -1,14 +1,17 @@
 defmodule Schole.Projects.ProjectsTest do
   use Schole.DataCase
-  import Schole.Factory
-  alias Schole.Projects
+
+  #@project build(:project)
 
   describe "projects" do
-    alias Schole.Projects.Project
+    alias Schole.Projects
 
-    test "valid project" do
-      project = build(:valid_project)
-      assert project.title == "Some project name"
+    test "list_projects/0 returns an empty list" do
+      assert [] == Projects.list_projects
+    end
+
+    test "create_project/1 returns the project" do
+      project = insert(:project)
     end
   end
 end
