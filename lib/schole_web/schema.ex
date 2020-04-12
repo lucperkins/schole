@@ -2,7 +2,7 @@ defmodule ScholeWeb.Schema do
   use Absinthe.Schema
   import_types ScholeWeb.Schema.ContentTypes
 
-  alias ScholeWeb.Resolvers.ProjectsResolver
+  alias ScholeWeb.Resolvers.{DocumentsResolver, ProjectsResolver}
 
   query do
     @desc "Get all projects"
@@ -18,6 +18,19 @@ defmodule ScholeWeb.Schema do
 
       resolve &ProjectsResolver.find/3
     end
+
+    @desc "Get all documents"
+    field :documents, list_of(:document) do
+      resolve &DocumentsResolver.all/3
+    end
+
+    @desc "Find a document by some combination of ID and title"
+    field :find_documents, list_of(:document) do
+      arg :id, :id
+      arg :title, :string
+
+      resolve &DocumentsResolver.find/3
+    end
   end
 
   mutation do
@@ -28,6 +41,17 @@ defmodule ScholeWeb.Schema do
       arg :metadata, :json
 
       resolve &ProjectsResolver.create/3
+    end
+
+    @desc "Create a new document"
+    field :create_document, :document do
+      arg :title, non_null(:string)
+      arg :content, non_null(:string)
+      arg :description, :string
+      arg :metadata, :json
+      arg :tags, list_of(:string)
+
+      resolve &DocumentsResolver.create/3
     end
   end
 end
