@@ -7,10 +7,7 @@ defmodule ScholeWeb.Resolvers.Projects do
     {:ok, projects}
   end
 
-  def get_project(_parent, args, _resolution) do
-    case Projects.find_project(args) do
-      nil -> {:error, :not_found}
-      project -> {:ok, project}
-    end
+  def create_project(_parent, args, _resolution) do
+    Projects.create_project(args)
   end
 end
