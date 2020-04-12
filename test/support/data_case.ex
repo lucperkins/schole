@@ -53,4 +53,13 @@ defmodule Schole.DataCase do
       end)
     end)
   end
+
+  def expect_valid(%Ecto.Changeset{} = changeset) do
+    assert changeset.valid?
+  end
+
+  def expect_invalid(%Ecto.Changeset{} = changeset, expected_errors) do
+    assert not changeset.valid?
+    assert expected_errors == errors_on(changeset)
+  end
 end

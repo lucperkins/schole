@@ -9,9 +9,5 @@ defmodule Schole.Projects.ProjectsTest do
     test "list_projects/0 returns an empty list" do
       assert [] == Projects.list_projects
     end
-
-    test "create_project/1 returns the project" do
-      project = insert(:project)
-    end
   end
 end
