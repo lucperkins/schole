@@ -1,7 +1,6 @@
 defmodule Schole.Schema.ProjectTest do
   use Schole.DataCase
 
-  alias Schole.Projects
   alias Schole.Projects.Project
 
   @valid %{title: "Some title", slug: "some-slug", metadata: %{foo: "bar", baz: 100, bop: [10]}}
