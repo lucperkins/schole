@@ -6,7 +6,7 @@ defmodule Schole.Repo.Migrations.CreateDocuments do
       add :title, :string, null: false
       add :description, :string
       add :content, :string, null: false
-      add :metadata, :map
+      add :metadata, :map, default: %{}
       add :tags, {:array, :string}, default: []
     end
   end
