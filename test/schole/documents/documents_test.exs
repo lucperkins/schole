@@ -6,6 +6,8 @@ defmodule Schole.Documents.DocumentsTest do
 
   @meta %{foo: "bar"}
   @valid %{title: "Some document title", content: "Some content", metadata: @meta}
+  @no_title %{content: "Some content", metadata: @meta}
+  @no_content %{title: "Some document title", metadata: @meta}
 
   describe "documents" do
     test "all/0 returns an empty list" do
@@ -18,6 +20,16 @@ defmodule Schole.Documents.DocumentsTest do
       assert document.content == @valid.content
       assert document.metadata == @valid.metadata
       assert document.tags == []
+    end
+
+    test "create/1 fails on missing title" do
+      assert {:error, %Ecto.Changeset{} = changeset} = Documents.create(@no_title)
+      expect_invalid(changeset, %{title: ["can't be blank"]})
+    end
+
+    test "create/1 fails on missing content" do
+      assert {:error, %Ecto.Changeset{} = changeset} = Documents.create(@no_content)
+      expect_invalid(changeset, %{content: ["can't be blank"]})
     end
   end
 end
