@@ -15,11 +15,11 @@ defmodule Schole.Projects.ProjectsTest do
       assert [] == Projects.all()
     end
 
-    test "create/1 successfully creates project" do
+    test "create/1 successfully creates a Project" do
       assert {:ok, %Project{} = project} = Projects.create(@valid)
-      assert project.title == "Some title"
-      assert project.slug == "some-slug"
-      assert project.metadata == %{foo: "bar"}
+      assert project.title == @valid.title
+      assert project.slug == @valid.slug
+      assert project.metadata == @valid.metadata
     end
 
     test "create/1 fails on non-unique title, event with different slugs" do
