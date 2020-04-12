@@ -1,4 +1,6 @@
 defmodule Schole.Documents do
+  import Ecto.Query
+
   alias Schole.Repo
   alias Schole.Documents.Document
 
@@ -7,7 +9,11 @@ defmodule Schole.Documents do
   end
 
   def find(args) do
-    Repo.get_by(Document, args)
+    q =  Enum.reduce(args, Document, fn {key, val}, queryable ->
+      where(queryable, ^dynamic([m], field(m, ^key) == ^val))
+    end)
+
+    Repo.all(q)
   end
 
   def create(attrs \\ %{}) do

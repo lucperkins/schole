@@ -9,7 +9,9 @@ defmodule ScholeWeb.Resolvers.DocumentsResolver do
   end
 
   def find(_parent, args, _resolution) do
-    Helpers.wrapped_call(Documents.find(args), "No document with those attributes found")
+    documents = Documents.find(args)
+
+    {:ok, documents}
   end
 
   def create(_parent, args, _resolution) do
