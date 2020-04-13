@@ -4,9 +4,10 @@ defmodule Schole.Schema.DocumentTest do
   alias Schole.Documents.Document
 
   @meta %{foo: "bar"}
-  @valid %{title: "Some doc title", content: "Some doc content", metadata: @meta}
-  @no_title %{content: "Some doc content", metadata: @meta}
-  @no_content %{title: "Some doc title", metadata: @meta}
+  @project_id 100
+  @valid %{title: "Some doc title", content: "Some doc content", metadata: @meta, project_id: @project_id}
+  @no_title %{content: "Some doc content", metadata: @meta, project_id: @project_id}
+  @no_content %{title: "Some doc title", metadata: @meta, project_id: @project_id}
 
   test "valid with valid params" do
     changeset = create_changeset(@valid)
