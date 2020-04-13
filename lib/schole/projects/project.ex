@@ -2,6 +2,7 @@ defmodule Schole.Projects.Project do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Schole.Documents.Document
   alias Schole.Projects.Project
 
   @required ~w(title)a
@@ -11,6 +12,7 @@ defmodule Schole.Projects.Project do
     field :slug, :string
     field :title, :string, null: false
     field :metadata, :map, default: %{}
+    has_many :documents, Document
   end
 
   def create_changeset(%Project{} = project, attrs \\ %{}) do

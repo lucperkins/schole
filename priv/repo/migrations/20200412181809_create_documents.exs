@@ -8,6 +8,7 @@ defmodule Schole.Repo.Migrations.CreateDocuments do
       add :content, :string, null: false
       add :metadata, :map, default: %{}
       add :tags, {:array, :string}, default: []
+      add :project_id, references(:projects)
     end
   end
 end
