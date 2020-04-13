@@ -5,7 +5,7 @@ defmodule Schole.Documents.Document do
   alias Schole.Documents.Document
   alias Schole.Projects.Project
 
-  @required ~w(title content)a
+  @required ~w(title content project_id)a
   @optional ~w(description metadata tags)a
 
   schema "documents" do

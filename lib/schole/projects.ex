@@ -6,6 +6,10 @@ defmodule Schole.Projects do
     Repo.all(Project)
   end
 
+  def get(id) do
+    Repo.get(Project, id)
+  end
+
   def find(args \\ %{}) do
     Repo.get_by(Project, args)
   end
