@@ -5,11 +5,12 @@ defmodule Schole.Documents.Document do
   alias Schole.Documents.Document
   alias Schole.Projects.Project
 
-  @required ~w(title content)a
+  @required ~w(title content url)a
   @optional ~w(description metadata tags)a
 
   schema "documents" do
     field :title, :string, null: false
+    field :url, :string, null: false
     field :description, :string
     field :content, :string, null: false
     field :metadata, :map, default: %{}
@@ -22,5 +23,6 @@ defmodule Schole.Documents.Document do
     |> cast(attrs, @required ++ @optional)
     |> validate_required(@required)
     |> put_assoc(:project, project)
+    |> unique_constraint(:url, name: :index_url_for_project, message: "A document with that URL already exists for this project")
   end
 end

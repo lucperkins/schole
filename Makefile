@@ -1,4 +1,4 @@
-.PHONY: check clean db-reset deps docs routes run shell test
+.PHONY: check clean db-reset deps docs routes run seed shell test
 
 check:
 	@mix check
@@ -6,7 +6,7 @@ check:
 clean:
 	@mix clean
 
-db-reset:
+db-reset: seed
 	@mix ecto.reset
 
 deps:
@@ -21,6 +21,9 @@ routes:
 
 run:
 	@mix phx.server
+
+seed:
+	@mix run priv/repo/seeds.exs
 
 shell:
 	@iex -S mix
