@@ -19,6 +19,7 @@ defmodule ScholeWeb.Resolvers.Helpers do
     case fun.() do
       {:ok, result} -> {:ok, result}
       {:error, %Changeset{} = changeset} -> {:error, format_errors(changeset)}
+      {:error, msg} -> {:error, msg}
     end
   end
 

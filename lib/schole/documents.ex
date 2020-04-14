@@ -1,8 +1,6 @@
 defmodule Schole.Documents do
   import Ecto.Query
-  import Ecto.Changeset
 
-  alias Ecto.Changeset
   alias Schole.Repo
   alias Schole.Documents.Document
   alias Schole.Projects
@@ -19,28 +17,14 @@ defmodule Schole.Documents do
     Repo.all(q)
   end
 
-  def create(attrs \\ %{}) do
-    changeset = %Document{} |> Document.create_changeset(attrs)
-
-    if changeset.valid? do
-      project_id = get_change(changeset, :project_id)
-
-      case Projects.get(project_id) do
-        nil ->
-          {:error, "Project with ID #{project_id} not found"}
-        project ->
-          changeset = %Document{} |> Document.create_changeset(attrs)
-
-          if changeset.valid? do
-            changeset
-            |> Changeset.put_assoc(:project, project)
-            |> Repo.insert()
-          else
-            {:error, changeset}
-          end
-      end
-    else
-      {:error, changeset}
+  def create(%{project_id: project_id} = attrs \\ %{}) do
+    case Projects.get(project_id) do
+      nil ->
+        {:error, "Project with ID #{project_id} not found"}
+      project ->
+        %Document{}
+        |> Document.create_changeset(attrs, project)
+        |> Repo.insert()
     end
   end
 end

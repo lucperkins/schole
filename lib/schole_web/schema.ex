@@ -47,6 +47,7 @@ defmodule ScholeWeb.Schema do
     field :create_document, :document do
       arg :title, non_null(:string)
       arg :content, non_null(:string)
+      arg :project_id, non_null(:id)
       arg :description, :string
       arg :metadata, :json
       arg :tags, list_of(:string)

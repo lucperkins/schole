@@ -5,7 +5,7 @@ defmodule Schole.Documents.Document do
   alias Schole.Documents.Document
   alias Schole.Projects.Project
 
-  @required ~w(title content project_id)a
+  @required ~w(title content)a
   @optional ~w(description metadata tags)a
 
   schema "documents" do
@@ -17,9 +17,10 @@ defmodule Schole.Documents.Document do
     belongs_to :project, Project
   end
 
-  def create_changeset(%Document{} = document, attrs \\ %{}) do
+  def create_changeset(%Document{} = document, attrs \\ %{}, %Project{} = project) do
     document
     |> cast(attrs, @required ++ @optional)
     |> validate_required(@required)
+    |> put_assoc(:project, project)
   end
 end
