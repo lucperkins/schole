@@ -9,6 +9,7 @@ defmodule Schole.Documents do
     Repo.all(Document)
   end
 
+  # Find Documents based on any combination of title, tag, and/or tags
   def find(args) do
     q =  Enum.reduce(args, Document, fn {key, val}, queryable ->
       cond do

@@ -24,12 +24,10 @@ defmodule ScholeWeb.Schema do
       resolve &DocumentsResolver.all/3
     end
 
-    @desc "Find a document by some combination of ID, title, and tag"
+    @desc "Find a document by some combination of title, single tag, or multiple tags"
     field :find_documents, list_of(:document) do
-      arg :id, :id
       arg :title, :string
-      arg :tag, :string
-      arg :tags, list_of(:string)
+      arg :tag, :search_tag
 
       resolve &DocumentsResolver.find/3
     end
