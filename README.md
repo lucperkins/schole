@@ -2,6 +2,37 @@
 
 **Schole** is a [headless CMS](https://headlesscms.org/about) for technical documentation.
 
+## Running Schole locally
+
+> **Prerequisities**: [Elixir](https://elixir-lang.org/install.html) and a recent version of [PostgreSQL](https://postgresql.org).
+
+1. Fetch the repo:
+
+    ```sh
+    git clone https://github.com/lucperkins/schole && cd schole
+    ```
+
+1. Install dependencies:
+
+    ```sh
+    mix deps.get # or make deps
+    ```
+
+1. Start up Postgres.
+1. Set up the database:
+
+    ```sh
+    mix ecto.setup # or make db-setup
+    ```
+
+1. Start up Schole:
+
+    ```sh
+    mix phx.server # or make run
+    ```
+
+1. Explore the [GraphQL Playground](https://github.com/prisma-labs/graphql-playground) interface at http://localhost:4000/graphql.
+
 ## The problem that Schole solves
 
 There are plenty of good tools out there for creating and publishing documentation *for a single project*. In most cases, putting all of your docs into a single repository and using a tool like [Jekyll](https://jekyll-rb.com) or [Hugo](https://gohugo.io) or [Sphinx](https://www.sphinx-doc.org) is perfectly sufficient.

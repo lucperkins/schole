@@ -9,6 +9,9 @@ clean:
 db-reset: seed
 	@mix ecto.reset
 
+db-setup:
+	@mix ecto.setup
+
 deps:
 	@mix deps.get
 

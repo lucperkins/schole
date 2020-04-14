@@ -18,7 +18,7 @@ defmodule ScholeWeb.Router do
   scope "/" do
     pipe_through :api
 
-    forward "/graphiql", Absinthe.Plug.GraphiQL,
+    forward "/graphql", Absinthe.Plug.GraphiQL,
       schema: Schema,
       interface: :playground
 

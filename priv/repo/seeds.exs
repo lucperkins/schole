@@ -1,3 +1,1 @@
-alias Schole.Projects
-
-Projects.create(%{title: "First project"})
+# No seeds just yet
