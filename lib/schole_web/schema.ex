@@ -10,7 +10,7 @@ defmodule ScholeWeb.Schema do
       resolve &ProjectsResolver.all/3
     end
 
-    @desc "Find a project by some combination of ID, title, and slug"
+    @desc "Find a project by some combination of ID, title, slug, and tag"
     field :find_project, :project do
       arg :id, :id
       arg :title, :string
@@ -24,10 +24,12 @@ defmodule ScholeWeb.Schema do
       resolve &DocumentsResolver.all/3
     end
 
-    @desc "Find a document by some combination of ID and title"
+    @desc "Find a document by some combination of ID, title, and tag"
     field :find_documents, list_of(:document) do
       arg :id, :id
       arg :title, :string
+      arg :tag, :string
+      arg :tags, list_of(:string)
 
       resolve &DocumentsResolver.find/3
     end

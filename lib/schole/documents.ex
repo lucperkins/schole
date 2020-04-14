@@ -11,7 +11,14 @@ defmodule Schole.Documents do
 
   def find(args) do
     q =  Enum.reduce(args, Document, fn {key, val}, queryable ->
-      where(queryable, ^dynamic([m], field(m, ^key) == ^val))
+      cond do
+        key == :tags ->
+          where(queryable, ^dynamic([m], fragment("? @> ?", m.tags, ^val)))
+        key == :tag ->
+          where(queryable, ^dynamic([m], ^val in m.tags))
+        true ->
+          where(queryable, ^dynamic([m], field(m, ^key) == ^val))
+      end
     end)
 
     Repo.all(q)
