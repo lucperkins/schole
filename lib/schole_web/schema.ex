@@ -46,6 +46,7 @@ defmodule ScholeWeb.Schema do
     @desc "Create a new document"
     field :create_document, :document do
       arg :title, non_null(:string)
+      arg :url, non_null(:string)
       arg :content, non_null(:string)
       arg :project_id, non_null(:id)
       arg :description, :string
