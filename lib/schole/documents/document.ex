@@ -24,18 +24,17 @@ defmodule Schole.Documents.Document do
     |> validate_required(@required)
     |> put_assoc(:project, project)
     |> unique_constraint(:url, name: :index_url_for_project, message: "A document with that URL already exists for this project")
-    |> validate_format(:url, ~r/\/([A-z0-9-_+]+\/)*([A-z0-9]+)$/)
+    |> validate_format(:url, ~r/^\/([A-z0-9-_+]+\/)*([A-z0-9]+)$/, message: "Invalid URL (must be of the form /a/b/c)")
     |> remove_trailing_slash()
   end
 
-  defp remove_trailing_slash(%Ecto.Changeset{} = document) do
-    url = get_change(document, :url)
-
+  defp remove_trailing_slash(%Ecto.Changeset{changes: %{url: url}} = changeset) do
     case String.at(url, -1) do
       "/" ->
         url = String.replace_suffix(url, "/", "")
-        put_change(document, :url, url)
-      _ -> document
+        put_change(changeset, :url, url)
+      _ -> changeset
     end
   end
+  defp remove_trailing_slash(changeset), do: changeset
 end
