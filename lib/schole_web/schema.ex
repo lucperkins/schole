@@ -27,7 +27,8 @@ defmodule ScholeWeb.Schema do
     @desc "Find a document by some combination of title, single tag, or multiple tags"
     field :find_documents, list_of(:document) do
       arg :title, :string
-      arg :tag, :search_tag
+      arg :tag, :string
+      arg :tags, list_of(:string)
 
       resolve &DocumentsResolver.find/3
     end
