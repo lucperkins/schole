@@ -24,5 +24,6 @@ defmodule Schole.Documents.Document do
     |> validate_required(@required)
     |> put_assoc(:project, project)
     |> unique_constraint(:url, name: :index_url_for_project, message: "A document with that URL already exists for this project")
+    |> validate_format(:url, ~r/\/([A-z0-9-_+]+\/)*([A-z0-9]+)$/)
   end
 end
