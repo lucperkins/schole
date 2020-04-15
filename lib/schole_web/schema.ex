@@ -50,6 +50,13 @@ defmodule ScholeWeb.Schema do
 
       resolve &DocumentsResolver.find/3
     end
+
+    @desc "Search documents"
+    field :search_documents, list_of(:document) do
+      arg :query, non_null(:string)
+
+      resolve &DocumentsResolver.search/3
+    end
   end
 
   mutation do

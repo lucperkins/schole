@@ -31,4 +31,8 @@ defmodule Schole.Documents do
         |> Repo.insert()
     end
   end
+
+  def search(query) do
+    Repo.all(from d in Document, where: ilike(d.content, ^"%#{query}%"))
+  end
 end

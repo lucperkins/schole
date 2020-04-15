@@ -23,6 +23,7 @@ defmodule ScholeWeb.Schema.ContentTypes do
   object :document do
     field :id, :id
     field :title, :string
+    field :url, :string
     field :description, :string
     field :content, :string
     field :metadata, :json
