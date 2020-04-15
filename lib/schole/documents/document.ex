@@ -3,6 +3,7 @@ defmodule Schole.Documents.Document do
   import Ecto.Changeset
 
   alias Schole.Documents.Document
+  alias Schole.Helpers
   alias Schole.Projects.Project
 
   @required ~w(title content url)a
@@ -24,17 +25,7 @@ defmodule Schole.Documents.Document do
     |> validate_required(@required)
     |> put_assoc(:project, project)
     |> unique_constraint(:url, name: :index_url_for_project, message: "A document with that URL already exists for this project")
+    |> Helpers.remove_trailing_slash()
     |> validate_format(:url, ~r/^\/([A-z0-9-_+]+\/)*([A-z0-9]+)$/, message: "Invalid URL (must be of the form /a/b/c)")
-    |> remove_trailing_slash()
   end
-
-  defp remove_trailing_slash(%Ecto.Changeset{changes: %{url: url}} = changeset) do
-    case String.at(url, -1) do
-      "/" ->
-        url = String.replace_suffix(url, "/", "")
-        put_change(changeset, :url, url)
-      _ -> changeset
-    end
-  end
-  defp remove_trailing_slash(changeset), do: changeset
 end
