@@ -25,5 +25,17 @@ defmodule Schole.Documents.Document do
     |> put_assoc(:project, project)
     |> unique_constraint(:url, name: :index_url_for_project, message: "A document with that URL already exists for this project")
     |> validate_format(:url, ~r/\/([A-z0-9-_+]+\/)*([A-z0-9]+)$/)
+    |> remove_trailing_slash()
+  end
+
+  defp remove_trailing_slash(%Ecto.Changeset{} = document) do
+    url = get_change(document, :url)
+
+    case String.at(url, -1) do
+      "/" ->
+        url = String.replace_suffix(url, "/", "")
+        put_change(document, :url, url)
+      _ -> document
+    end
   end
 end
