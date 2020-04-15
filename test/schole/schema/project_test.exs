@@ -10,26 +10,26 @@ defmodule Schole.Schema.ProjectTest do
   @no_title %{slug: "slug-only", metadata: @meta}
 
   test "valid with valid params" do
-    changeset = create_changeset(@valid)
+    changeset = make_changeset(@valid)
     expect_valid(changeset)
   end
 
   test "valid without slug" do
-    changeset = create_changeset(@no_slug)
+    changeset = make_changeset(@no_slug)
     expect_valid(changeset)
   end
 
   test "valid without metadata" do
-    changeset = create_changeset(@no_meta)
+    changeset = make_changeset(@no_meta)
     expect_valid(changeset)
   end
 
   test "invalid without title" do
-    changeset = create_changeset(@no_title)
+    changeset = make_changeset(@no_title)
     expect_invalid(changeset, %{title: ["can't be blank"]})
   end
 
-  defp create_changeset(attrs) do
+  defp make_changeset(attrs) do
     Project.create_changeset(%Project{}, attrs)
   end
 end

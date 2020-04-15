@@ -7,9 +7,10 @@ defmodule Schole.Documents.DocumentsTest do
   alias Schole.Projects.Project
 
   @meta %{foo: "bar"}
-  @valid %{title: "Some document title", content: "Some content", metadata: @meta}
-  @no_title %{content: "Some content", metadata: @meta, }
-  @no_content %{title: "Some document title", metadata: @meta, project_id: @project_id}
+  @project_id 100
+  @valid %{title: "Some document title", content: "Some content", url: "/intro", metadata: @meta}
+  @no_title %{content: "Some content", url: "/intro", metadata: @meta }
+  @no_content %{title: "Some document title", url: "/intro", metadata: @meta, project_id: @project_id}
   @project %{title: "Test project"}
 
   describe "documents" do
@@ -22,6 +23,7 @@ defmodule Schole.Documents.DocumentsTest do
       valid = Map.merge(@valid, %{project_id: project.id})
 
       assert {:ok, %Document{} = document} = Documents.create(valid)
+      assert document.url == @valid.url
       assert document.title == @valid.title
       assert document.content == @valid.content
       assert document.metadata == @valid.metadata
