@@ -9,7 +9,6 @@ defmodule Schole.Documents do
     Repo.all(Document)
   end
 
-
   # Find Documents based on any combination of title, tag, and/or tags
   def find(args) do
     args
@@ -19,8 +18,7 @@ defmodule Schole.Documents do
     |> Repo.all()
   end
 
-  defp find_query(:tags, queryable, val), do: where(queryable, ^dynamic([m], fragment("? @> ?", m.tags, ^val)))
-  defp find_query(:tag, queryable, val), do: where(queryable, ^dynamic([m], ^val in m.tags))
+  defp find_query(:tags, queryable, tags), do: where(queryable, ^dynamic([m], fragment("? @> ?", m.tags, ^tags)))
   defp find_query(key, queryable, val), do: where(queryable, ^dynamic([m], field(m, ^key) == ^val))
 
   def create(%{project_id: project_id} = attrs \\ %{}) do

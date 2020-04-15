@@ -5,7 +5,7 @@ defmodule Schole.Repo do
 
   defmacro contains(array, item) do
     quote do
-      fragment("? @> ?", array, ^item)
+      fragment("? @> ?", ^array, ^item)
     end
   end
 end
