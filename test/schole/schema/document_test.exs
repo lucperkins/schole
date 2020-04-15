@@ -29,9 +29,7 @@ defmodule Schole.Schema.DocumentTest do
     urls = ["/foo/bar", "/foo/bar/baz", "/foo/bar_baz", "/bar/foo/"]
 
     for url <- urls do
-      input = Map.put(@valid, :url, url)
-      changeset = make_changeset(input, @project)
-      expect_valid(changeset)
+      test_url(@valid, url)
     end
   end
 
@@ -39,9 +37,7 @@ defmodule Schole.Schema.DocumentTest do
     urls = ["https://example.com", "foo/bar", "c://desktop", "foo bar"]
 
     for url <- urls do
-      input = Map.put(@valid, :url, url)
-      changeset = make_changeset(input, @project)
-      expect_invalid(changeset, %{url: ["Invalid URL (must be of the form /a/b/c)"]})
+      test_url(@valid, url, %{url: ["Invalid URL (must be of the form /a/b/c)"]})
     end
   end
 
@@ -57,5 +53,19 @@ defmodule Schole.Schema.DocumentTest do
 
   defp make_changeset(attrs, project) do
     Document.create_changeset(%Document{}, attrs, project)
+  end
+
+  # Expect invalid
+  defp test_url(changeset, url, expected_error) do
+    input = Map.put(changeset, :url, url)
+    changeset = make_changeset(input, @project)
+    expect_invalid(changeset, expected_error)
+  end
+
+  # Expect valid
+  defp test_url(changeset, url) do
+    input = Map.put(changeset, :url, url)
+    changeset = make_changeset(input, @project)
+    expect_valid(changeset)
   end
 end
