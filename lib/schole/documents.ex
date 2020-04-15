@@ -5,6 +5,12 @@ defmodule Schole.Documents do
   alias Schole.Documents.Document
   alias Schole.Projects
 
+  defmacro contains_all(array, item) do
+    quote do
+      fragment("? @> ?", unquote(array), unquote(item))
+    end
+  end
+
   def all() do
     Repo.all(Document)
   end
@@ -18,7 +24,7 @@ defmodule Schole.Documents do
     |> Repo.all()
   end
 
-  defp find_query(:tags, queryable, tags), do: where(queryable, ^dynamic([m], fragment("? @> ?", m.tags, ^tags)))
+  defp find_query(:tags, queryable, tags), do: where(queryable, ^dynamic([m], contains_all(m.tags, ^tags)))
   defp find_query(key, queryable, val), do: where(queryable, ^dynamic([m], field(m, ^key) == ^val))
 
   def create(%{project_id: project_id} = attrs \\ %{}) do
