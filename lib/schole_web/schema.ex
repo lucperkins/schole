@@ -4,25 +4,6 @@ defmodule ScholeWeb.Schema do
 
   alias ScholeWeb.Resolvers.{DocumentsResolver, ProjectsResolver}
 
-  object :string_tag do
-    field :tag, :string
-  end
-
-  object :list_tags do
-    field :tag, list_of(:string)
-  end
-
-  union :tag do
-    description "One or more tags"
-
-    types [:string_tag, :list_tags]
-
-    resolve_type(&resolve/2)
-  end
-
-  defp resolve(value, _) when is_list(value), do: :list_tags
-  defp resolve(value, _), do: :string_tag
-
   query do
     @desc "Get all projects"
     field :projects, list_of(:project) do

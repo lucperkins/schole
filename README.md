@@ -52,7 +52,7 @@ All Schole data is accessible via a [GraphQL](https://graphql.org) interface tha
 
 ```graphql
 query {
-  getProject(slug: "my-docs-project") {
+  findProject(slug: "my-docs-project") {
     title
     description
     metadata
@@ -65,13 +65,13 @@ query {
 }
 ```
 
-This `getProject` query would return the project info for `my-docs-project` as well as the documents associated with the project as a single JSON object. That information could be used by, for example, a [Gatsby](https://gatsbyjs.org) theme to build the project website.
+This `findProject` query would return the project info for `my-docs-project` as well as the documents associated with the project as a single JSON object. That information could be used by, for example, a [Gatsby](https://gatsbyjs.org) theme to build the project website.
 
 If you wanted to create a landing page for all of your projects, you could use a query like this:
 
 ```graphql
 query {
-  allProjects {
+  projects {
     title
     description
     slug
@@ -96,7 +96,7 @@ With Schole, you could potentially expose a features data type that would enable
 
 ```graphql
 query {
-  getAllFeatures {
+  features(projectId: 20) {
     name
     status
   }
