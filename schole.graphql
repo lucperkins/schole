@@ -1,0 +1,51 @@
+scalar Json
+
+type Project {
+  id: ID!
+  slug: String!
+  title: String!
+  metadata: Json
+  documents: [Document]! @relation
+}
+
+type Document {
+  id: ID!
+  title: String!
+  url: String!
+  description: String
+  content: String!
+  metadata: Json
+  tags: [String!]
+  project: Project! @relation
+}
+
+type Query {
+  # All projects
+  projects(): [Project!]!
+  # Find a project based on ID, title, or slug
+  findProject(id: ID, title: String, slug: String): Project
+  # All current documents
+  documents(): [Document!]!
+  # Find documents based on some combination of string and tags
+  findDocuments(title: String, tags: [String!]): [Document!]!
+  # Search the content of all documents via a query string
+  searchDocuments(query: String!): [Document!]!
+}
+
+type Mutation {
+  createProject(title: String!, slug: String, metadata: Json): Project
+  createDocument(
+    title: String!
+    url: String!
+    content: String!
+    projectId: ID! @relation
+    description: String
+    metadata: Json
+    tags: [String!]
+  ): Document
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

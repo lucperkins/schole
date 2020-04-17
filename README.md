@@ -2,7 +2,7 @@
 
 **Schole** is a [headless CMS](https://headlesscms.org/about) for technical documentation. It enables you to store, update, and query, in one place, all of the information required for documenting an indefinite number of projects—even a whole software ecosystem or all the internal projects for large software org.
 
-The project is in its [early phases](#current-status) and offers pre-alpha versions of just a few [features](#features) but will grow over time.
+The project is in its [early phases](#current-status) and offers pre-alpha versions of just a few [data types and operations](#graphql-interface) but will grow over time.
 
 ## Running Schole locally
 
@@ -44,8 +44,6 @@ But this approach runs into hard limits when your needs extend beyond the single
 * You want to synchronize information for an entire software ecosystem with many projects
 * You're in a large org with many internal docs projects but want information to be shareable between them
 
-## Features
-
 ## How Schole thinks about information
 
 Schole provides a single, centralized storage system for *all* of the information associated with an indefinite number of software projects. This information currently includes only one type of data: Markdown documents. But Schole could expand to support all kinds of data, such as release notes, changelogs, arbitrary key/value info, concept lists, FAQs, event info, community and social media links, [OpenAPI](https://www.openapis.org) specs, and so on.
@@ -85,58 +83,7 @@ query {
 
 ### Full interface definition
 
-Below you can see the entirety of the current GraphQL interface provided by Schole:
-
-```graphql
-scalar Json
-
-type Project {
-  id: ID!
-  slug: String!
-  title: String!
-  metadata: Json
-  documents: [Document]! @relation
-}
-
-type Document {
-  id: ID!
-  title: String!
-  url: String!
-  description: String
-  content: String!
-  metadata: Json
-  tags: [String!]
-  project: Project! @relation
-}
-
-input DocumentInput {
-  title: String!
-  url: String!
-  content: String!
-  projectId: ID! @relation
-  description: String
-  metadata: Json
-  tags: [String!]
-}
-
-type Query {
-  projects(): [Project!]!
-  findProject(id: ID, title: String, slug: String): Project
-  documents(): [Document!]!
-  findDocuments(title: String, tags: [String!]): [Document!]!
-  searchDocuments(query: String!): [Document!]!
-}
-
-type Mutation {
-  createProject(title: String!, slug: String, metadata: Json): Project
-  createDocument(document: DocumentInput): Document
-}
-
-schema {
-  query: Query
-  mutation: Mutation
-}
-```
+The GraphQL interface provided by Schole is defined in [`schole.graphql`](./schole.graphql).
 
 ## Data layer vs. view layer
 
