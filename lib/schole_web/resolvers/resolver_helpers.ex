@@ -2,11 +2,12 @@ defmodule ScholeWeb.Resolvers.Helpers do
   alias Ecto.Changeset
 
   def format_errors(changeset) do
-    errors = Changeset.traverse_errors(changeset, fn {msg, opts} ->
-      Enum.reduce(opts, msg, fn {k, v}, formatted_msg ->
-        formatted_msg |> String.replace("%{#{k}}", to_string(v))
+    errors =
+      Changeset.traverse_errors(changeset, fn {msg, opts} ->
+        Enum.reduce(opts, msg, fn {k, v}, formatted_msg ->
+          formatted_msg |> String.replace("%{#{k}}", to_string(v))
+        end)
       end)
-    end)
 
     %{
       message: "Validation errors occurred",

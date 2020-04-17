@@ -6,9 +6,12 @@ defmodule Schole.Helpers do
       "/" ->
         url = String.replace_suffix(url, "/", "")
         put_change(changeset, :url, url)
-      _ -> changeset
+
+      _ ->
+        changeset
     end
   end
+
   def remove_trailing_slash(changeset), do: changeset
 
   def set_project_slug(changeset) do
@@ -17,6 +20,7 @@ defmodule Schole.Helpers do
         nil ->
           title = get_change(changeset, :title)
           put_change(changeset, :slug, Slug.slugify(title))
+
         slug ->
           put_change(changeset, :slug, Slug.slugify(slug))
       end

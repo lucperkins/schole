@@ -7,8 +7,19 @@ defmodule Schole.Schema.DocumentTest do
 
   @meta %{foo: "bar"}
   @project_id 100
-  @valid %{title: "Some doc title", content: "Some doc content", url: "/deploy", metadata: @meta, project_id: @project_id}
-  @no_title %{content: "Some doc content", url: "/deploy", metadata: @meta, project_id: @project_id}
+  @valid %{
+    title: "Some doc title",
+    content: "Some doc content",
+    url: "/deploy",
+    metadata: @meta,
+    project_id: @project_id
+  }
+  @no_title %{
+    content: "Some doc content",
+    url: "/deploy",
+    metadata: @meta,
+    project_id: @project_id
+  }
   @no_content %{title: "Some doc title", url: "/deploy", metadata: @meta, project_id: @project_id}
   @project %Project{}
 

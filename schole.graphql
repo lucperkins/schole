@@ -26,10 +26,8 @@ type Query {
   findProject(id: ID, title: String, slug: String): Project
   # All current documents
   documents(): [Document!]!
-  # Find documents based on some combination of string and tags
-  findDocuments(title: String, tags: [String!]): [Document!]!
-  # Search the content of all documents via a query string
-  searchDocuments(query: String!): [Document!]!
+  # Find documents based on some combination of string, tags, and search terms
+  findDocuments(title: String, tags: [String!], query: String): [Document!]!
 }
 
 type Mutation {

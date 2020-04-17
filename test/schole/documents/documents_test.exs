@@ -9,8 +9,13 @@ defmodule Schole.Documents.DocumentsTest do
   @meta %{foo: "bar"}
   @project_id 100
   @valid %{title: "Some document title", content: "Some content", url: "/intro", metadata: @meta}
-  @no_title %{content: "Some content", url: "/intro", metadata: @meta }
-  @no_content %{title: "Some document title", url: "/intro", metadata: @meta, project_id: @project_id}
+  @no_title %{content: "Some content", url: "/intro", metadata: @meta}
+  @no_content %{
+    title: "Some document title",
+    url: "/intro",
+    metadata: @meta,
+    project_id: @project_id
+  }
   @project %{title: "Test project"}
 
   describe "documents" do

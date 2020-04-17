@@ -1,4 +1,6 @@
 defmodule ScholeWeb.Resolvers.ProjectsResolver do
+  @moduledoc false
+
   alias Schole.Projects
   alias ScholeWeb.Resolvers.Helpers
 
@@ -10,11 +12,6 @@ defmodule ScholeWeb.Resolvers.ProjectsResolver do
 
   def find(_parent, args, _resolution) do
     Helpers.wrapped_call(fn -> Projects.find(args) end, "No project with those attributes found")
-
-    case Projects.find(args) do
-      nil -> {:error, "No project with those attributes found"}
-      project -> {:ok, project}
-    end
   end
 
   def create(_parent, args, _resolution) do
