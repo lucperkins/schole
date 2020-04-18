@@ -1,4 +1,6 @@
 defmodule ScholeWeb.Schema do
+  @moduledoc false
+
   use Absinthe.Schema
   import_types(ScholeWeb.Schema.ContentTypes)
 
@@ -46,13 +48,7 @@ defmodule ScholeWeb.Schema do
 
     @desc "Create a new document"
     field :create_document, :document do
-      arg(:title, non_null(:string))
-      arg(:url, non_null(:string))
-      arg(:content, non_null(:string))
-      arg(:project_id, non_null(:id))
-      arg(:description, :string)
-      arg(:metadata, :json)
-      arg(:tags, list_of(:string))
+      arg :new_document, non_null(:new_document)
 
       resolve(&DocumentsResolver.create/3)
     end

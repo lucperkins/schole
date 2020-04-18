@@ -1,7 +1,7 @@
 defmodule Schole.Helpers do
   import Ecto.Changeset
 
-  def remove_trailing_slash(%Ecto.Changeset{changes: %{url: url}} = changeset) do
+  def format_url(%Ecto.Changeset{changes: %{url: url}} = changeset) do
     case String.at(url, -1) do
       "/" ->
         url = String.replace_suffix(url, "/", "")
@@ -11,8 +11,6 @@ defmodule Schole.Helpers do
         changeset
     end
   end
-
-  def remove_trailing_slash(changeset), do: changeset
 
   def set_project_slug(changeset) do
     if changeset.valid? do

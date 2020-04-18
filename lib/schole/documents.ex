@@ -33,14 +33,14 @@ defmodule Schole.Documents do
   defp find_query(key, queryable, val),
     do: where(queryable, ^dynamic([m], field(m, ^key) == ^val))
 
-  def create(%{project_id: project_id} = attrs \\ %{}) do
+  def create(%{new_document: %{project_id: project_id}} = attrs) do
     case Projects.get(project_id) do
       nil ->
         {:error, "Project with ID #{project_id} not found"}
 
       project ->
         %Document{}
-        |> Document.create_changeset(attrs, project)
+        |> Document.create_changeset(attrs.new_document, project)
         |> Repo.insert()
     end
   end

@@ -28,7 +28,7 @@ defmodule Schole.Documents.Document do
       name: :index_url_for_project,
       message: "A document with that URL already exists for this project"
     )
-    |> Helpers.remove_trailing_slash()
+    |> Helpers.format_url()
     |> validate_format(:url, ~r/^\/([A-z0-9-_+]+\/)*([A-z0-9]+)$/,
       message: "Invalid URL (must be of the form /a/b/c)"
     )

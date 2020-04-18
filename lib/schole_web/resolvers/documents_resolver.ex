@@ -15,12 +15,8 @@ defmodule ScholeWeb.Resolvers.DocumentsResolver do
   end
 
   def create(_parent, args, _resolution) do
+    IO.inspect(args)
+
     Helpers.wrapped_call(fn -> Documents.create(args) end)
-  end
-
-  def search(_parent, %{query: query}, _resolution) do
-    documents = Documents.search(query)
-
-    {:ok, documents}
   end
 end

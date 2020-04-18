@@ -41,4 +41,14 @@ defmodule ScholeWeb.Schema.ContentTypes do
       end)
     end
   end
+
+  input_object :new_document do
+    field :title, non_null(:string)
+    field :url, non_null(:string)
+    field :description, :string
+    field :content, non_null(:string)
+    field :metadata, :json
+    field :tags, list_of(:string)
+    field :project_id, non_null(:id)
+  end
 end
