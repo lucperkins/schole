@@ -1,0 +1,61 @@
+schema {
+  query: RootQueryType
+  mutation: RootMutationType
+}
+
+type Document {
+  id: ID
+  title: String
+  url: String
+  description: String
+  content: String
+  metadata: Json
+  tags: [String]
+  project: Project
+}
+
+input NewDocument {
+  title: String!
+  url: String!
+  description: String
+  content: String!
+  metadata: Json
+  tags: [String]
+  projectId: ID!
+}
+
+"The `Json` scalar type allows you to use arbitrary JSON data in Schole."
+scalar Json
+
+type RootMutationType {
+  "Create a new project"
+  createProject(newProject: NewProject!): Project
+
+  "Create a new document"
+  createDocument(newDocument: NewDocument!): Document
+}
+
+type RootQueryType {
+  "Find a project by some combination of ID, title, slug, and tags"
+  findProjects(tags: [String], slug: String, title: String, id: ID): Project
+
+  "Find documents on the basis of some combination of title, tags, or text query string"
+  findDocuments(query: String, tags: [String], title: String): [Document]
+
+  "Fetch a specific document by ID"
+  getDocument(id: ID): Document
+}
+
+type Project {
+  id: ID
+  slug: String
+  title: String
+  metadata: Json
+  documents: [Document]
+}
+
+input NewProject {
+  title: String!
+  slug: String
+  metadata: Json
+}

@@ -84,7 +84,7 @@ query {
 
 ### Full interface definition
 
-The GraphQL interface provided by Schole is defined in [`schole.graphql`](./schole.graphql).
+The GraphQL interface provided by Schole is defined in [`schema.graphql`](./schema.graphql).
 
 ## Data layer vs. view layer
 
