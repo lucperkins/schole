@@ -1,14 +1,14 @@
 defmodule ScholeWeb.Resolvers.ProjectsResolver do
   @moduledoc false
 
-  alias Schole.Projects
+  alias Schole.{Projects, Repo}
   alias ScholeWeb.Resolvers.Helpers
 
-  def find(args) when args == %{} do
+  def find(_parent, args, _resolution) when args == %{} do
     Repo.all(Document)
   end
 
-  def find(args) do
+  def find(_parent, args, _resolution) do
     args
     |> Enum.reduce(Document, fn {key, val}, queryable ->
       Repo.find_query(key, queryable, val)

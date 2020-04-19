@@ -17,6 +17,10 @@ defmodule Schole.Documents do
     |> Repo.all()
   end
 
+  def get(id) do
+    Repo.get(Document, id)
+  end
+
   def create(%{new_document: %{project_id: project_id}} = attrs) do
     case Projects.get(project_id) do
       nil ->
