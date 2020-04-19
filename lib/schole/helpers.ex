@@ -1,4 +1,6 @@
 defmodule Schole.Helpers do
+  @moduledoc false
+
   import Ecto.Changeset
 
   def format_url(%Ecto.Changeset{changes: %{url: url}} = changeset) do

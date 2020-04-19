@@ -1,4 +1,6 @@
 defmodule ScholeWeb.Resolvers.Helpers do
+  @moduledoc false
+
   alias Ecto.Changeset
 
   def format_errors(changeset) do

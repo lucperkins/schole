@@ -1,4 +1,6 @@
 defmodule ScholeWeb.Schema.ContentTypes do
+  @moduledoc false
+
   use Absinthe.Schema.Notation
   import_types(ScholeWeb.Schema.JSONScalar)
   alias Schole.Repo
@@ -40,6 +42,12 @@ defmodule ScholeWeb.Schema.ContentTypes do
         {:ok, project}
       end)
     end
+  end
+
+  input_object :new_project do
+    field :title, non_null(:string)
+    field :slug, :string
+    field :metadata, :json
   end
 
   input_object :new_document do
