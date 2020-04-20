@@ -8,12 +8,9 @@ defmodule Schole.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      # Start the Ecto repository
       Schole.Repo,
-      # Start the endpoint when the application starts
-      ScholeWeb.Endpoint
-      # Starts a worker by calling: Schole.Worker.start_link(arg)
-      # {Schole.Worker, arg},
+      ScholeWeb.Endpoint,
+      {Phoenix.PubSub, name: Schole.PubSub}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

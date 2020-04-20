@@ -59,7 +59,7 @@ defmodule Schole.Schema.DocumentTest do
 
     changeset = make_changeset(valid, @project)
     expect_valid(changeset)
-    get_change(changeset, :url) == out_url
+    assert get_change(changeset, :url) == out_url
   end
 
   defp make_changeset(attrs, project) do

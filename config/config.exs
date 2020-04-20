@@ -16,7 +16,7 @@ config :schole, ScholeWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "oiIrKlvDBpqc83q9U4kvuHtaQ43N5ojBU4XCLMGrAyR4N4jjOksodwxZUTt57Rv8",
   render_errors: [view: ScholeWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Schole.PubSub, adapter: Phoenix.PubSub.PG2],
+  pubsub_server: Schole.PubSub,
   live_view: [signing_salt: "ZTGi9Ji5"]
 
 # Configures Elixir's Logger
