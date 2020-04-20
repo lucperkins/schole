@@ -1,7 +1,6 @@
 defmodule ScholeWeb.Schema.JSONScalar do
   @moduledoc """
-  The Json scalar type allows arbitrary JSON values to be passed in and out.
-  Requires `{ :jason, "~> 1.1" }` package: https://github.com/michalmuskala/jason
+  The `Json` scalar type allows you to use arbitrary JSON data in Schole.
   """
   use Absinthe.Schema.Notation
 
@@ -9,9 +8,7 @@ defmodule ScholeWeb.Schema.JSONScalar do
 
   scalar :json, name: "Json" do
     description("""
-    The `Json` scalar type represents arbitrary JSON string data, represented as UTF-8
-    character sequences. The `Json` type is most often used to represent a free-form
-    human-readable JSON string.
+    The `Json` scalar type allows you to use arbitrary JSON data in Schole.
     """)
 
     serialize(&encode/1)
