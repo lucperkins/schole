@@ -10,6 +10,7 @@ defmodule Schole.Documents.Document do
 
   @required ~w(title content url)a
   @optional ~w(description metadata tags)a
+  @url_regex ~r/^\/([A-z0-9-_+]+\/)*([A-z0-9]+)$/
 
   schema "documents" do
     field :title, :string, null: false
@@ -27,12 +28,9 @@ defmodule Schole.Documents.Document do
     |> validate_required(@required)
     |> put_assoc(:project, project)
     |> unique_constraint(:url,
-      name: :index_url_for_project,
-      message: "A document with that URL already exists for this project"
-    )
+      name: :index_version_for_project,
+      message: "Release notes for that version and project already exist")
     |> Helpers.format_url()
-    |> validate_format(:url, ~r/^\/([A-z0-9-_+]+\/)*([A-z0-9]+)$/,
-      message: "Invalid URL (must be of the form /a/b/c)"
-    )
+    |> validate_format(:url, @url_regex, message: "Invalid URL (must be of the form /a/b/c)")
   end
 end
