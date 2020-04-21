@@ -7,7 +7,7 @@ defmodule Schole.ReleaseNotes.ReleaseNote do
   alias Schole.ReleaseNotes.ReleaseNote
   alias Schole.Projects.Project
 
-  @required ~w(version note repo)a
+  @required ~w(version notes repo)a
   @optional ~w(pull_request_id)a
   @version_regex ~r/^(\d+\.)*(\d)$/
 

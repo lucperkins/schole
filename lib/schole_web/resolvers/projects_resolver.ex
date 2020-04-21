@@ -1,7 +1,7 @@
 defmodule ScholeWeb.Resolvers.ProjectsResolver do
   @moduledoc false
 
-  alias Schole.{Projects, Repo}
+  alias Schole.Projects
   alias ScholeWeb.Resolvers.Helpers
 
   def find(_parent, args, _resolution) do
