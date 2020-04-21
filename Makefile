@@ -19,6 +19,9 @@ docs:
 	@mix do inch, docs
 	@open doc/index.html
 
+graphql-sdl:
+	@mix absinthe.schema.sdl --schema ScholeWeb.Schema
+
 routes:
 	@mix phx.routes
 
