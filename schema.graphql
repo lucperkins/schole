@@ -31,13 +31,19 @@ type RootMutationType {
   "Create a new project"
   createProject(newProject: NewProject!): Project
 
+  "Delete a project"
+  deleteProject(id: ID!): Project
+
   "Create a new document"
   createDocument(newDocument: NewDocument!): Document
+
+  "Delete a document"
+  deleteDocument(id: ID!): Document
 }
 
 type RootQueryType {
   "Find a project by some combination of ID, title, slug, and tags"
-  findProjects(tags: [String], slug: String, title: String, id: ID): Project
+  findProjects(tags: [String], slug: String, title: String, id: ID): [Project]
 
   "Find documents on the basis of some combination of title, tags, or text query string"
   findDocuments(query: String, tags: [String], title: String): [Document]
@@ -51,6 +57,7 @@ type Project {
   slug: String
   title: String
   metadata: Json
+  tags: [String]
   documents: [Document]
 }
 
