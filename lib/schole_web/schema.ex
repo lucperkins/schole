@@ -8,7 +8,7 @@ defmodule ScholeWeb.Schema do
 
   query do
     @desc "Find a project by some combination of ID, title, slug, and tags"
-    field :find_projects, :project do
+    field :find_projects, list_of(:project) do
       arg :id, :id
       arg :title, :string
       arg :slug, :string
@@ -42,11 +42,25 @@ defmodule ScholeWeb.Schema do
       resolve &ProjectsResolver.create/3
     end
 
+    @desc "Delete a project"
+    field :delete_project, :project do
+      arg :id, non_null(:id)
+
+      resolve &ProjectsResolver.delete/3
+    end
+
     @desc "Create a new document"
     field :create_document, :document do
       arg :new_document, non_null(:new_document)
 
       resolve &DocumentsResolver.create/3
+    end
+
+    @desc "Delete a document"
+    field :delete_document, :document do
+      arg :id, non_null(:id)
+
+      resolve &DocumentsResolver.delete/3
     end
   end
 end

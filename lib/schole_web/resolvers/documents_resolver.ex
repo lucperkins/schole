@@ -17,4 +17,8 @@ defmodule ScholeWeb.Resolvers.DocumentsResolver do
   def create(_parent, args, _resolution) do
     Helpers.wrapped_call(fn -> Documents.create(args) end)
   end
+
+  def delete(_parans, %{id: id}, _resolution) do
+    Helpers.wrapped_call(fn -> Documents.delete(id) end)
+  end
 end

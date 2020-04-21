@@ -10,6 +10,7 @@ defmodule ScholeWeb.Schema.ContentTypes do
     field :slug, :string
     field :title, :string
     field :metadata, :json
+    field :tags, list_of(:string)
 
     field :documents, list_of(:document) do
       resolve(fn project, _, _ ->

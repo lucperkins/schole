@@ -32,4 +32,11 @@ defmodule Schole.Documents do
         |> Repo.insert()
     end
   end
+
+  def delete(id) do
+    case get(id) do
+      nil -> {:error, :not_found}
+      document -> Repo.delete(document)
+    end
+  end
 end
