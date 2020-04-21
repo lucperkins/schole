@@ -45,6 +45,21 @@ defmodule ScholeWeb.Schema.ContentTypes do
     end
   end
 
+  object :release_note do
+    field :id, :id
+    field :version, :string
+    field :project, :project do
+      resolve(fn release_note, _, _ ->
+        project =
+          release_note
+          |> Ecto.assoc(:project)
+          |> Repo.one()
+
+        {:ok, project}
+      end)
+    end
+  end
+
   input_object :new_project do
     field :title, non_null(:string)
     field :slug, :string

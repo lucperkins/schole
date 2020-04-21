@@ -5,8 +5,6 @@ defmodule Schole.Repo.Migrations.CreateReleaseNotes do
     create table(:release_notes) do
       add :version, :string, null: false
       add :notes, :text, null: false
-      add :repo, :string
-      add :pull_request_id, :integer
       add :project_id, references(:projects)
     end
 
