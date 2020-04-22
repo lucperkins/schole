@@ -18,7 +18,7 @@ defmodule Schole.ReleaseNotes do
   end
 
   def get(id) do
-    Repo.get(Project, id)
+    Repo.get(ReleaseNote, id)
   end
 
   def create(%{new_release_note: %{project_id: project_id}} = attrs) do
@@ -36,7 +36,7 @@ defmodule Schole.ReleaseNotes do
   def delete(id) do
     case get(id) do
       nil -> {:error, :not_found}
-      project -> Repo.delete(project)
+      release_note -> Repo.delete(release_note)
     end
   end
 end

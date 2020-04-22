@@ -3,6 +3,13 @@ schema {
   mutation: RootMutationType
 }
 
+type ReleaseNote {
+  id: ID
+  version: String
+  notes: String
+  project: Project
+}
+
 type Document {
   id: ID
   title: String
@@ -42,11 +49,14 @@ type RootMutationType {
 }
 
 type RootQueryType {
-  "Find a project by some combination of ID, title, slug, and tags"
+  "Find a project via some combination of ID, title, slug, and tags"
   findProjects(tags: [String], slug: String, title: String, id: ID): [Project]
 
-  "Find documents on the basis of some combination of title, tags, or text query string"
+  "Find documents via some combination of title, tags, or text query string"
   findDocuments(query: String, tags: [String], title: String): [Document]
+
+  "Find release notes (all or for a specific project)"
+  findReleaseNotes(projectId: ID): [ReleaseNote]
 
   "Fetch a specific document by ID"
   getDocument(id: ID): Document
