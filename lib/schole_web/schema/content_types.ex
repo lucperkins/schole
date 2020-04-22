@@ -22,6 +22,17 @@ defmodule ScholeWeb.Schema.ContentTypes do
         {:ok, documents}
       end)
     end
+
+    field :release_notes, list_of(:release_note) do
+      resolve(fn project, _, _ ->
+        release_notes =
+          project
+          |> Ecto.assoc(:release_notes)
+          |> Repo.all()
+
+        {:ok, release_notes}
+      end)
+    end
   end
 
   object :document do

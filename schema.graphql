@@ -3,6 +3,12 @@ schema {
   mutation: RootMutationType
 }
 
+input NewReleaseNote {
+  version: String!
+  notes: String!
+  projectId: ID!
+}
+
 type ReleaseNote {
   id: ID
   version: String
@@ -36,16 +42,22 @@ scalar Json
 
 type RootMutationType {
   "Create a new project"
-  createProject(newProject: NewProject!): Project
+  createProject(project: NewProject!): Project
 
   "Delete a project"
   deleteProject(id: ID!): Project
 
   "Create a new document"
-  createDocument(newDocument: NewDocument!): Document
+  createDocument(document: NewDocument!): Document
 
   "Delete a document"
   deleteDocument(id: ID!): Document
+
+  "Create release notes"
+  createReleaseNotes(releaseNote: NewReleaseNote!): ReleaseNote
+
+  "Delete a document"
+  deleteReleaseNotes(id: ID!): ReleaseNote
 }
 
 type RootQueryType {
@@ -69,6 +81,7 @@ type Project {
   metadata: Json
   tags: [String]
   documents: [Document]
+  releaseNotes: [ReleaseNote]
 }
 
 input NewProject {

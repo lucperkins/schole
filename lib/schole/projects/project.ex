@@ -7,6 +7,7 @@ defmodule Schole.Projects.Project do
   alias Schole.Documents.Document
   alias Schole.Helpers
   alias Schole.Projects.Project
+  alias Schole.ReleaseNotes.ReleaseNote
 
   @required ~w(title)a
   @optional ~w(metadata slug)a
@@ -16,6 +17,7 @@ defmodule Schole.Projects.Project do
     field :title, :string, null: false
     field :metadata, :map, default: %{}
     has_many :documents, Document
+    has_many :release_notes, ReleaseNote
   end
 
   def create_changeset(%Project{} = project, attrs \\ %{}) do
