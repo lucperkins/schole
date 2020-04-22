@@ -10,18 +10,18 @@ input NewReleaseNote {
 }
 
 type ReleaseNote {
-  id: ID
-  version: String
-  notes: String
+  id: ID!
+  version: String!
+  notes: String!
   project: Project
 }
 
 type Document {
-  id: ID
-  title: String
-  url: String
+  id: ID!
+  title: String!
+  url: String!
   description: String
-  content: String
+  content: String!
   metadata: Json
   tags: [String]
   project: Project
@@ -75,9 +75,9 @@ type RootQueryType {
 }
 
 type Project {
-  id: ID
-  slug: String
-  title: String
+  id: ID!
+  slug: String!
+  title: String!
   metadata: Json
   tags: [String]
   documents: [Document]

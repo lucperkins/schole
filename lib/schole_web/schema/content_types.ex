@@ -6,9 +6,9 @@ defmodule ScholeWeb.Schema.ContentTypes do
   alias Schole.Repo
 
   object :project do
-    field :id, :id
-    field :slug, :string
-    field :title, :string
+    field :id, non_null(:id)
+    field :slug, non_null(:string)
+    field :title, non_null(:string)
     field :metadata, :json
     field :tags, list_of(:string)
 
@@ -36,11 +36,11 @@ defmodule ScholeWeb.Schema.ContentTypes do
   end
 
   object :document do
-    field :id, :id
-    field :title, :string
-    field :url, :string
+    field :id, non_null(:id)
+    field :title, non_null(:string)
+    field :url, non_null(:string)
     field :description, :string
-    field :content, :string
+    field :content, non_null(:string)
     field :metadata, :json
     field :tags, list_of(:string)
 
@@ -57,9 +57,9 @@ defmodule ScholeWeb.Schema.ContentTypes do
   end
 
   object :release_note do
-    field :id, :id
-    field :version, :string
-    field :notes, :string
+    field :id, non_null(:id)
+    field :version, non_null(:string)
+    field :notes, non_null(:string)
     field :project, :project do
       resolve(fn release_note, _, _ ->
         project =
