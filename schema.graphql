@@ -56,7 +56,7 @@ type RootMutationType {
   "Create release notes"
   createReleaseNotes(releaseNote: NewReleaseNote!): ReleaseNote
 
-  "Delete a document"
+  "Delete release notes"
   deleteReleaseNotes(id: ID!): ReleaseNote
 }
 

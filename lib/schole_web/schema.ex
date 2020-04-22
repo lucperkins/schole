@@ -77,7 +77,7 @@ defmodule ScholeWeb.Schema do
       resolve &ReleaseNotesResolver.create/3
     end
 
-    @desc "Delete a document"
+    @desc "Delete release notes"
     field :delete_release_notes, :release_note do
       arg :id, non_null(:id)
 
