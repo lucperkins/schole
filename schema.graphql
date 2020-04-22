@@ -6,7 +6,6 @@ schema {
 input NewReleaseNote {
   version: String!
   notes: String!
-  projectId: ID!
 }
 
 type ReleaseNote {
@@ -34,7 +33,6 @@ input NewDocument {
   content: String!
   metadata: Json
   tags: [String]
-  projectId: ID!
 }
 
 "The `Json` scalar type allows you to use arbitrary JSON data in Schole."
@@ -48,13 +46,13 @@ type RootMutationType {
   deleteProject(id: ID!): Project
 
   "Create a new document"
-  createDocument(document: NewDocument!): Document
+  createDocument(document: NewDocument!, projectId: ID!): Document
 
   "Delete a document"
   deleteDocument(id: ID!): Document
 
   "Create release notes"
-  createReleaseNotes(releaseNote: NewReleaseNote!): ReleaseNote
+  createReleaseNotes(releaseNote: NewReleaseNote!, projectId: ID!): ReleaseNote
 
   "Delete release notes"
   deleteReleaseNotes(id: ID!): ReleaseNote
