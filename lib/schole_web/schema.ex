@@ -58,6 +58,7 @@ defmodule ScholeWeb.Schema do
 
     @desc "Create a new document"
     field :create_document, :document do
+      arg :project_id, non_null(:id)
       arg :document, non_null(:new_document)
 
       resolve &DocumentsResolver.create/3
@@ -72,6 +73,7 @@ defmodule ScholeWeb.Schema do
 
     @desc "Create release notes"
     field :create_release_notes, :release_note do
+      arg :project_id, non_null(:id)
       arg :release_note, non_null(:new_release_note)
 
       resolve &ReleaseNotesResolver.create/3

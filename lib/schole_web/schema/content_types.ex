@@ -85,12 +85,10 @@ defmodule ScholeWeb.Schema.ContentTypes do
     field :content, non_null(:string)
     field :metadata, :json
     field :tags, list_of(:string)
-    field :project_id, non_null(:id)
   end
 
   input_object :new_release_note do
     field :version, non_null(:string)
     field :notes, non_null(:string)
-    field :project_id, non_null(:id)
   end
 end
