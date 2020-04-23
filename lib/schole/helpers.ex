@@ -28,4 +28,13 @@ defmodule Schole.Helpers do
       changeset
     end
   end
+
+  def format_slug(changeset) do
+    if changeset.valid? do
+      slug = get_change(changeset, :slug)
+      put_change(changeset, :slug, Slug.slugify(slug))
+    else
+      changeset
+    end
+  end
 end

@@ -1,9 +1,8 @@
-alias Schole.Repo
-alias Schole.Documents
+alias Schole.Api.ApiDocs
+alias Schole.ApiDocs
+alias Schole.{Documents, Projects, ReleaseNotes, Repo}
 alias Schole.Documents.Document
-alias Schole.Projects
 alias Schole.Projects.Project
-alias Schole.ReleaseNotes
 alias Schole.ReleaseNotes.ReleaseNote
 
 import Ecto.Query

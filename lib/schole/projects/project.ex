@@ -4,6 +4,7 @@ defmodule Schole.Projects.Project do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Schole.Api.ApiDocs
   alias Schole.Documents.Document
   alias Schole.Helpers
   alias Schole.Projects.Project
@@ -18,6 +19,7 @@ defmodule Schole.Projects.Project do
     field :metadata, :map, default: %{}
     has_many :documents, Document
     has_many :release_notes, ReleaseNote
+    has_many :api_docs, ApiDocs
   end
 
   def create_changeset(%Project{} = project, attrs \\ %{}) do

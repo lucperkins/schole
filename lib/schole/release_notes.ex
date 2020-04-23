@@ -21,14 +21,14 @@ defmodule Schole.ReleaseNotes do
     Repo.get(ReleaseNote, id)
   end
 
-  def create(%{release_note: release_note, project_id: project_id} = attrs) do
+  def create(%{release_note: release_note, project_id: project_id}) do
     case Projects.get(project_id) do
       nil ->
         {:error, "Project with ID #{project_id} not found"}
 
       project ->
         %ReleaseNote{}
-        |> ReleaseNote.create_changeset(attrs.release_note, project)
+        |> ReleaseNote.create_changeset(release_note, project)
         |> Repo.insert()
     end
   end

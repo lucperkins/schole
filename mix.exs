@@ -46,7 +46,9 @@ defmodule Schole.MixProject do
       {:ex_doc, "~> 0.21.3", only: [:dev]},
       {:absinthe, "~> 1.5.0-rc.5", override: true},
       {:absinthe_plug, "~> 1.5.0-rc.2", override: true},
-      {:slugify, "~> 1.3.0"}
+      {:slugify, "~> 1.3.0"},
+      {:open_api_spex, "~> 3.6"},
+      {:ecto_enum, "~> 1.4"}
     ]
   end
 
