@@ -20,7 +20,7 @@ defmodule Schole.MixProject do
   def application do
     [
       mod: {Schole.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:algolia, :logger, :runtime_tools]
     ]
   end
 
@@ -48,7 +48,8 @@ defmodule Schole.MixProject do
       {:absinthe_plug, "~> 1.5.0-rc.2", override: true},
       {:slugify, "~> 1.3.0"},
       {:open_api_spex, "~> 3.6"},
-      {:ecto_enum, "~> 1.4"}
+      {:ecto_enum, "~> 1.4"},
+      {:algolia, "~> 0.8.0"}
     ]
   end
 
