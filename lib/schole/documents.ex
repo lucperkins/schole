@@ -5,6 +5,7 @@ defmodule Schole.Documents do
   alias Schole.Documents.Document
   alias Schole.Projects
   alias Schole.Search
+  alias Ecto.Multi
 
   def find(args) when args == %{} do
     Repo.all(Document)
@@ -28,9 +29,18 @@ defmodule Schole.Documents do
         {:error, "Project with ID #{project_id} not found"}
 
       project ->
-        %Document{}
-        |> Document.create_changeset(document, project)
-        |> Repo.insert()
+        changeset =
+          %Document{}
+          |> Document.create_changeset(document, project)
+
+        case Repo.insert(changeset) do
+          {:ok, document} ->
+            case Search.save_document(document) do
+              {:ok, _} -> {:ok, document}
+              {:error, reason} -> {:error, reason}
+            end
+          {:error, reason} -> {:error, reason}
+        end
     end
   end
 
@@ -42,7 +52,7 @@ defmodule Schole.Documents do
   end
 
   def search(query) do
-    Search.search(query, [])
+    Search.search(query)
   end
 
   def by_ids(ids) when ids == [], do: []
