@@ -5,7 +5,6 @@ defmodule Schole.Documents do
   alias Schole.Documents.Document
   alias Schole.Projects
   alias Schole.Search
-  alias Ecto.Multi
 
   def find(args) when args == %{} do
     Repo.all(Document)
