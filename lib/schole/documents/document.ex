@@ -29,7 +29,8 @@ defmodule Schole.Documents.Document do
     |> put_assoc(:project, project)
     |> unique_constraint(:url,
       name: :index_version_for_project,
-      message: "Release notes for that version and project already exist")
+      message: "Release notes for that version and project already exist"
+    )
     |> Helpers.format_url()
     |> validate_format(:url, @url_regex, message: "Invalid URL (must be of the form /a/b/c)")
   end

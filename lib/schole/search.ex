@@ -1,4 +1,6 @@
 defmodule Schole.Search do
+  @moduledoc false
+
   @namespace "schole"
 
   alias Schole.Documents
@@ -12,21 +14,21 @@ defmodule Schole.Search do
   end
 
   def save_document(%Document{id: id} = document) do
-    Algolia.save_object(@namespace, document_item(document), id)
+    case Algolia.save_object(@namespace, document_item(document), id) do
+      {:ok, _} -> {:ok, document}
+      {:error, reason} -> {:error, reason}
+    end
   end
 
-  defp handle_response(%{"hits" => hits} = res) do
-    case hits do
-      [] -> []
-      _hits ->
-        document_ids =
-          res
-          |> Map.get("hits")
-          |> Enum.map(fn(hit) -> Map.get(hit, "objectID") end)
-          |> Enum.map(&String.to_integer/1)
+  defp handle_response(%{"hits" => hits}) when hits == [], do: []
 
-        Documents.by_ids(document_ids)
-    end
+  defp handle_response(%{"hits" => hits}) do
+    document_ids =
+      hits
+      |> Enum.map(fn hit -> Map.get(hit, "objectID") end)
+      |> Enum.map(&String.to_integer/1)
+
+    Documents.by_ids(document_ids)
   end
 
   defp document_item(%Document{title: title, url: url, tags: tags, content: content}) do
