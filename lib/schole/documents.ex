@@ -4,6 +4,7 @@ defmodule Schole.Documents do
   alias Schole.Repo
   alias Schole.Documents.Document
   alias Schole.Projects
+  alias Schole.Search
 
   def find(args) when args == %{} do
     Repo.all(Document)
@@ -38,5 +39,16 @@ defmodule Schole.Documents do
       nil -> {:error, :not_found}
       document -> Repo.delete(document)
     end
+  end
+
+  def search(query) do
+    Search.search(query, [])
+  end
+
+  def by_ids(ids) when ids == [], do: []
+  def by_ids(ids) do
+    Document
+    |> Repo.by_ids(ids)
+    |> Repo.all()
   end
 end

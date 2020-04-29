@@ -4,5 +4,6 @@ alias Schole.{Documents, Projects, ReleaseNotes, Repo}
 alias Schole.Documents.Document
 alias Schole.Projects.Project
 alias Schole.ReleaseNotes.ReleaseNote
+alias ScholeWeb.Resolvers.{DocumentsResolver, ProjectsResolver, ReleaseNotesResolver}
 
 import Ecto.Query

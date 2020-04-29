@@ -26,6 +26,12 @@ defmodule ScholeWeb.Schema do
       resolve &DocumentsResolver.find/3
     end
 
+    field :search_documents, list_of(:document) do
+      arg :query, non_null(:string)
+
+      resolve &DocumentsResolver.search/3
+    end
+
     @desc "Find release notes (all or for a specific project)"
     field :find_release_notes, list_of(:release_note) do
       arg :project_id, :id

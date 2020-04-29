@@ -18,7 +18,12 @@ defmodule ScholeWeb.Resolvers.DocumentsResolver do
     Helpers.wrapped_call(fn -> Documents.create(args) end)
   end
 
-  def delete(_parans, %{id: id}, _resolution) do
+  def delete(_parent, %{id: id}, _resolution) do
     Helpers.wrapped_call(fn -> Documents.delete(id) end)
+  end
+
+  def search(_parent, %{query: query}, _resolution) do
+    documents = Documents.search(query)
+    {:ok, documents}
   end
 end
