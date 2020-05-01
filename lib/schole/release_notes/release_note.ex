@@ -22,7 +22,8 @@ defmodule Schole.ReleaseNotes.ReleaseNote do
     |> put_assoc(:project, project)
     |> unique_constraint(:version,
       name: :index_url_for_project,
-      message: "release notes already exist for that version and project")
+      message: "release notes already exist for that version and project"
+    )
     |> validate_required(@required)
     |> validate_format(:version, @version_regex, message: "Not a valid version")
   end

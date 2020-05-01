@@ -1,4 +1,7 @@
-.PHONY: check clean db-reset deps docs routes run seed shell test
+.PHONY: build check clean db-reset deps docs routes run seed shell test
+
+build:
+	@mix
 
 check:
 	@mix check

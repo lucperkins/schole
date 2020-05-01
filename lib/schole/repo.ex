@@ -19,4 +19,6 @@ defmodule Schole.Repo do
 
   def find_query(key, queryable, val),
     do: where(queryable, ^dynamic([m], field(m, ^key) == ^val))
+
+  def by_ids(query, ids), do: from(q in query, where: q.id in ^ids, order_by: fragment("array_position(?, ?)", ^ids, q.id))
 end

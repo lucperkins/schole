@@ -4,6 +4,7 @@ defmodule Schole.Documents do
   alias Schole.Repo
   alias Schole.Documents.Document
   alias Schole.Projects
+  alias Schole.Search
 
   def find(args) when args == %{} do
     Repo.all(Document)
@@ -27,9 +28,14 @@ defmodule Schole.Documents do
         {:error, "Project with ID #{project_id} not found"}
 
       project ->
-        %Document{}
-        |> Document.create_changeset(document, project)
-        |> Repo.insert()
+        changeset =
+          %Document{}
+          |> Document.create_changeset(document, project)
+
+        case Repo.insert(changeset) do
+          {:ok, document} -> Search.index(document)
+          {:error, reason} -> {:error, reason}
+        end
     end
   end
 
@@ -38,5 +44,13 @@ defmodule Schole.Documents do
       nil -> {:error, :not_found}
       document -> Repo.delete(document)
     end
+  end
+
+  def by_ids(ids) when ids == [], do: []
+
+  def by_ids(ids) do
+    Document
+    |> Repo.by_ids(ids)
+    |> Repo.all()
   end
 end

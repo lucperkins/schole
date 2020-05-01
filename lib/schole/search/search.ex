@@ -7,6 +7,7 @@ defmodule Schole.Search do
 
   @type query :: String
   @type documents :: [Document]
+  @type document :: Document
 
   @callback search(query) :: documents
 
@@ -14,6 +15,12 @@ defmodule Schole.Search do
   def search(query) do
     driver = select_search_driver()
     driver.search(query)
+  end
+
+  @spec index(document) :: {:ok, term} | {:error, term}
+  def index(document) do
+    driver = select_search_driver()
+    driver.index(document)
   end
 
   defp select_search_driver() do
