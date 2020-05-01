@@ -35,6 +35,26 @@ The project is in its [early phases](#current-status) and offers pre-alpha versi
 
 1. Explore the [GraphQL Playground][playground] interface at http://localhost:4000/graphql.
 
+### Algolia search
+
+By default, Schole uses [`ilike`](https://www.postgresql.org/docs/current/functions-matching.html#FUNCTIONS-LIKE) in Postgres across documents to provide search. Another option is the SaaS search provider [Algolia](https://algolia.com).
+
+To use Algolia search:
+
+1. Create an Algolia application
+1. Set environment variables for the application ID and API key (`ALGOLIA_APPLICATION_ID` and `ALGOLIA_API_KEY`)
+1. Comment/uncomment the following in [`config.exs`](config/config.exs):
+
+    ```elixir
+    #config :schole, Schole.Search, Schole.Search.Postgres.ILike
+
+    config :schole, Schole.Search, Schole.Search.Algolia
+
+    config :algolia,
+      application_id: System.get_env("ALGOLIA_APPLICATION_ID"),
+      api_key: System.get_env("ALGOLIA_API_KEY")
+    ```
+
 ## The problem that Schole solves
 
 There are plenty of good tools out there for creating and publishing documentation *for a single project*. In most cases, putting all of your docs into a single repository and using a tool like [Jekyll] or [Hugo] or [Sphinx] is perfectly sufficient.
