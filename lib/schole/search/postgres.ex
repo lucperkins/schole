@@ -19,8 +19,9 @@ defmodule Schole.Search.Postgres do
       Repo.all(q)
     end
 
-    def index(_document) do
-      # Document already automatically indexed
+    def index(document) do
+      # Document is technically already automatically indexed, hence no action
+      {:ok, document}
     end
   end
 end

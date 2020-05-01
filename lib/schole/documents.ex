@@ -33,7 +33,7 @@ defmodule Schole.Documents do
           |> Document.create_changeset(document, project)
 
         case Repo.insert(changeset) do
-          {:ok, document} -> Search.index(document)
+          {:ok, document} -> index(document)
           {:error, reason} -> {:error, reason}
         end
     end
@@ -52,5 +52,9 @@ defmodule Schole.Documents do
     Document
     |> Repo.by_ids(ids)
     |> Repo.all()
+  end
+
+  def index(%Document{} = document) do
+    Search.index(document)
   end
 end
