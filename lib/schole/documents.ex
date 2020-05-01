@@ -33,7 +33,7 @@ defmodule Schole.Documents do
           |> Document.create_changeset(document, project)
 
         case Repo.insert(changeset) do
-          {:ok, document} -> Search.save_document(document)
+          {:ok, document} -> Search.index(document)
           {:error, reason} -> {:error, reason}
         end
     end
@@ -44,10 +44,6 @@ defmodule Schole.Documents do
       nil -> {:error, :not_found}
       document -> Repo.delete(document)
     end
-  end
-
-  def search(query) do
-    Search.search(query)
   end
 
   def by_ids(ids) when ids == [], do: []

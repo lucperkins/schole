@@ -1,5 +1,7 @@
-defmodule Schole.Search do
+defmodule Schole.Search.Algolia do
   @moduledoc false
+
+  @behaviour Schole.Search
 
   @namespace "schole"
 
@@ -13,7 +15,7 @@ defmodule Schole.Search do
     end
   end
 
-  def save_document(%Document{id: id} = document) do
+  def index(%Document{id: id} = document) do
     case Algolia.save_object(@namespace, document_item(document), id) do
       {:ok, _} -> {:ok, document}
       {:error, reason} -> {:error, reason}
