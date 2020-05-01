@@ -39,17 +39,4 @@ defmodule Schole.Documents do
       document -> Repo.delete(document)
     end
   end
-
-  def search(query) do
-    provider = Application.get_env(:schole, :search)
-
-    case Application.get_env(:schole, :search) do
-      Schole.Search.Postgres -> search(:postgres, query)
-      _ -> {:error, "search provider #{provider} not recognized"}
-    end
-  end
-
-  def search(:postgres, query) do
-    Schole.Search.Postgres.search(query)
-  end
 end

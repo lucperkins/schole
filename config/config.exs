@@ -12,7 +12,7 @@ config :schole, ScholeWeb.Endpoint,
   live_view: [signing_salt: "ZTGi9Ji5"]
 
 config :schole, :search,
-  driver: Schole.Search.Postgres
+  driver: Schole.Search.Postgres.ILike
 
 #config :schole, :search, Schole.Search,
 # driver: Schole.Search.Algolia,
