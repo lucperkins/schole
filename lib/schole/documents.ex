@@ -21,7 +21,7 @@ defmodule Schole.Documents do
     Repo.get(Document, id)
   end
 
-  def create(%{document: document, project_id: project_id} = attrs) do
+  def create(%{document: document, project_id: project_id}) do
     case Projects.get(project_id) do
       nil ->
         {:error, "Project with ID #{project_id} not found"}
@@ -38,5 +38,18 @@ defmodule Schole.Documents do
       nil -> {:error, :not_found}
       document -> Repo.delete(document)
     end
+  end
+
+  def search(query) do
+    provider = Application.get_env(:schole, :search)
+
+    case Application.get_env(:schole, :search) do
+      Schole.Search.Postgres -> search(:postgres, query)
+      _ -> {:error, "search provider #{provider} not recognized"}
+    end
+  end
+
+  def search(:postgres, query) do
+    Schole.Search.Postgres.search(query)
   end
 end
