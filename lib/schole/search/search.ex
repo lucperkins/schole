@@ -12,6 +12,10 @@ defmodule Schole.Search do
   @callback search(query) :: documents
 
   @spec search(query) :: documents
+  def search(query) when query == "" do
+    []
+  end
+
   def search(query) do
     driver = select_search_driver()
     driver.search(query)

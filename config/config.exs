@@ -11,8 +11,7 @@ config :schole, ScholeWeb.Endpoint,
   pubsub: [name: Schole.PubSub, adapter: Phoenix.PubSub.PG2],
   live_view: [signing_salt: "ZTGi9Ji5"]
 
-config :schole, :search,
-  driver: Schole.Search.Postgres.ILike
+config :schole, :search, driver: Schole.Search.Postgres.ILike
 
 config :schole, :search,
   driver: Schole.Search.Algolia,

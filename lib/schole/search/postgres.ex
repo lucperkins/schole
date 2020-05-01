@@ -12,8 +12,9 @@ defmodule Schole.Search.Postgres do
     @behaviour Schole.Search
 
     def search(query) do
-      q = from d in Document,
-        where: ilike(d.content, ^"%#{query}%")
+      q =
+        from d in Document,
+          where: ilike(d.content, ^"%#{query}%")
 
       Repo.all(q)
     end
