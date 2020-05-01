@@ -13,7 +13,9 @@ config :schole, ScholeWeb.Endpoint,
 
 config :schole, Schole.Search, Schole.Search.Postgres.ILike
 
-# config :schole, Schole.Search, Schole.Search.Algolia,
+#config :schole, Schole.Search, Schole.Search.Algolia
+
+#config :algolia,
 #  application_id: System.get_env("ALGOLIA_APPLICATION_ID"),
 #  api_key: System.get_env("ALGOLIA_API_KEY")
 
