@@ -21,7 +21,7 @@ defmodule Schole.Documents do
     Repo.get(Document, id)
   end
 
-  def create(%{document: document, project_id: project_id} = attrs) do
+  def create(%{document: document, project_id: project_id}) do
     case Projects.get(project_id) do
       nil ->
         {:error, "Project with ID #{project_id} not found"}

@@ -1,17 +1,9 @@
-# This file is responsible for configuring your application
-# and its dependencies with the aid of the Mix.Config module.
-#
-# This configuration file is loaded before any dependency and
-# is restricted to this project.
-
-# General application configuration
 use Mix.Config
 
 config :schole,
   ecto_repos: [Schole.Repo],
   generators: [binary_id: true]
 
-# Configures the endpoint
 config :schole, ScholeWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "oiIrKlvDBpqc83q9U4kvuHtaQ43N5ojBU4XCLMGrAyR4N4jjOksodwxZUTt57Rv8",
@@ -19,14 +11,17 @@ config :schole, ScholeWeb.Endpoint,
   pubsub: [name: Schole.PubSub, adapter: Phoenix.PubSub.PG2],
   live_view: [signing_salt: "ZTGi9Ji5"]
 
-# Configures Elixir's Logger
+config :schole, :search,
+  driver: Schole.Search.Postgres.ILike
+
+#config :schole, :search, Schole.Search,
+# driver: Schole.Search.Algolia,
+# api_key: System.get_env("ALGOLIA_API_KEY")
+
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

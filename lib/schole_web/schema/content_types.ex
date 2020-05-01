@@ -4,7 +4,6 @@ defmodule ScholeWeb.Schema.ContentTypes do
   use Absinthe.Schema.Notation
   import_types(ScholeWeb.Schema.JSONScalar)
   alias Schole.Repo
-  alias ScholeWeb.Resolvers.DocumentsResolver
 
   @desc "A Schole documentation project"
   object :project do
