@@ -14,7 +14,7 @@ func rootCmd() *cobra.Command {
 	v := newViper("schole")
 
 	cmd := &cobra.Command{
-		Use: "schole",
+		Use:   "schole",
 		Short: "A headless CMS for technical documentation",
 	}
 
