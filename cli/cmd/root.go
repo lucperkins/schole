@@ -9,8 +9,6 @@ import (
 )
 
 func rootCmd() *cobra.Command {
-	//var cfg Config
-
 	v := newViper("schole")
 
 	cmd := &cobra.Command{
@@ -18,9 +16,7 @@ func rootCmd() *cobra.Command {
 		Short: "A headless CMS for technical documentation",
 	}
 
-	bindFlags(cmd, v)
-
-	cmd.AddCommand(projectsCmd(v))
+	cmd.AddCommand(projectsCmd(v), docsCmd(v))
 
 	return cmd
 }
@@ -36,11 +32,25 @@ func exitOnError(err error) {
 	}
 }
 
-func bindFlags(cmd *cobra.Command, v *viper.Viper) {
-	flags := pflag.NewFlagSet("schole", pflag.ExitOnError)
+func clientFlags() *pflag.FlagSet {
+	flags := pflag.NewFlagSet("url", pflag.ExitOnError)
 	flags.StringP("url", "u", Defaults.Url, "GraphQL endpoint URL")
+	return flags
+}
 
+func docsFlags() *pflag.FlagSet {
+	flags := pflag.NewFlagSet("docs", pflag.ExitOnError)
+	flags.StringP("dir", "d", Defaults.Dir, "Docs directory")
+	return flags
+}
+
+func bindFlags(cmd *cobra.Command, flags *pflag.FlagSet, v *viper.Viper) {
 	cmd.Flags().AddFlagSet(flags)
+	exitOnError(v.BindPFlags(flags))
+}
+
+func bindPFlags(cmd *cobra.Command, flags *pflag.FlagSet, v *viper.Viper) {
+	cmd.PersistentFlags().AddFlagSet(flags)
 	exitOnError(v.BindPFlags(flags))
 }
 

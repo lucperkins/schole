@@ -18,7 +18,7 @@ func projectsCmd(v *viper.Viper) *cobra.Command {
 		Short: "Manages Schole docs projects",
 	}
 
-	bindFlags(cmd, v)
+	bindPFlags(cmd, clientFlags(), v)
 
 	cmd.AddCommand(listProjects(v))
 
@@ -51,8 +51,6 @@ func listProjects(v *viper.Viper) *cobra.Command {
 			}
 		},
 	}
-
-	bindFlags(cmd, v)
 
 	return cmd
 }
