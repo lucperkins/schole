@@ -20,7 +20,7 @@ defmodule Schole.Projects do
     Repo.get(Project, id)
   end
 
-  def create(%{new_project: new_project}) do
+  def create(%{project: new_project}) do
     %Project{}
     |> Project.create_changeset(new_project)
     |> Repo.insert()

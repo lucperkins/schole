@@ -38,7 +38,7 @@ func syncDocs(v *viper.Viper) *cobra.Command {
 }
 
 type File struct {
-	Url string
+	Url     string
 	Content string
 }
 
@@ -51,7 +51,7 @@ func syncDirectory(dir string) {
 			}
 
 			f := File{
-				Url: fmt.Sprintf("/%s", path),
+				Url:     fmt.Sprintf("/%s", path),
 				Content: string(bs),
 			}
 

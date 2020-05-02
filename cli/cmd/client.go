@@ -22,9 +22,21 @@ func NewClient(url string) *Client {
 }
 
 func (c *Client) RunQuery(query string, obj interface{}) error {
-	q := []byte(fmt.Sprintf("query { %s }", query))
+	q := fmt.Sprintf("query { %s }", query)
 
-	req, err := http.NewRequest(http.MethodPost, c.url, bytes.NewBuffer(q))
+	return c.run(q, obj)
+}
+
+func (c *Client) RunMutation(mutation string, obj interface{}) error {
+	q := fmt.Sprintf("mutation { %s }", mutation)
+
+	return c.run(q, obj)
+}
+
+func (c *Client) run(query string, obj interface{}) error {
+	bs := bytes.NewBuffer([]byte(query))
+
+	req, err := http.NewRequest(http.MethodPost, c.url, bs)
 	if err != nil {
 		return err
 	}
@@ -37,10 +49,10 @@ func (c *Client) RunQuery(query string, obj interface{}) error {
 
 	defer res.Body.Close()
 
-	data, err := ioutil.ReadAll(res.Body)
+	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return err
 	}
 
-	return json.Unmarshal(data, obj)
+	return json.Unmarshal(body, obj)
 }

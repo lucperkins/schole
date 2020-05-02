@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 	"os"
 )
@@ -30,28 +29,6 @@ func exitOnError(err error) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-}
-
-func clientFlags() *pflag.FlagSet {
-	flags := pflag.NewFlagSet("url", pflag.ExitOnError)
-	flags.StringP("url", "u", Defaults.Url, "GraphQL endpoint URL")
-	return flags
-}
-
-func docsFlags() *pflag.FlagSet {
-	flags := pflag.NewFlagSet("docs", pflag.ExitOnError)
-	flags.StringP("dir", "d", Defaults.Dir, "Docs directory")
-	return flags
-}
-
-func bindFlags(cmd *cobra.Command, flags *pflag.FlagSet, v *viper.Viper) {
-	cmd.Flags().AddFlagSet(flags)
-	exitOnError(v.BindPFlags(flags))
-}
-
-func bindPFlags(cmd *cobra.Command, flags *pflag.FlagSet, v *viper.Viper) {
-	cmd.PersistentFlags().AddFlagSet(flags)
-	exitOnError(v.BindPFlags(flags))
 }
 
 func newViper(envPrefix string) *viper.Viper {
