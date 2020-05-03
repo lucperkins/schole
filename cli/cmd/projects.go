@@ -14,19 +14,6 @@ type Project struct {
 	Slug  string
 }
 
-type ErrorRes struct {
-	Code   string `json:"code"`
-	Errors struct {
-		Title []string `json:"title"`
-	} `json:"errors"`
-	Locations []struct {
-		Column int `json:"column"`
-		Line   int `json:"line"`
-	} `json:"locations"`
-	Message string   `json:"message"`
-	Path    []string `json:"path"`
-}
-
 func projectsCmd(v *viper.Viper) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "projects",
