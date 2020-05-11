@@ -2,7 +2,8 @@
   "name": "theme",
   "private": true,
   "schole": {
-    "title": "Schole View Template"
+    "title": "Schole View Template",
+    "project": "gridsome-test"
   },
   "scripts": {
     "build": "gridsome build",
@@ -10,6 +11,7 @@
     "explore": "gridsome explore"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "gridsome": "^0.7.0"
   },
   "devDependencies": {

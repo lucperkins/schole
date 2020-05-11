@@ -1,17 +1,42 @@
-// Server API makes it possible to hook into various parts of Gridsome
-// on server-side and add custom data to the GraphQL data layer.
-// Learn more: https://gridsome.org/docs/server-api/
+const config = require('./package.json').schole;
+const projectSlug = config.project;
 
-// Changes here require a server restart.
-// To restart press CTRL + C in terminal and run `gridsome develop`
+const axios = require('axios');
+
+const getDocumentsQuery = (projectSlug) => {
+  return `query {
+    findProjects(slug:"${projectSlug}") {
+      documents {
+        title
+        content
+      }
+    }
+  }`
+}
+
+const getDocuments = (slug) => {
+  const query = getDocumentsQuery(slug);
+
+  return axios({
+    method: 'POST',
+    url: 'http://localhost:4000/graphql',
+    data: {
+      query: query
+    }
+  })
+  .then(res => res.data);
+}
 
 module.exports = function (api) {
-  api.loadSource(({ addCollection, addMetadata }) => {
-    // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
+  api.loadSource(({ addMetadata }) => {
     addMetadata('settings', require('./gridsome.config').settings);
   });
 
-  api.createPages(({ createPage }) => {
-    // Use the Pages API here: https://gridsome.org/docs/pages-api/
+  api.createPages(async ({ createPage }) => {
+    const { data } = await getDocuments(projectSlug);
+
+    data.findProjects[0].documents.forEach(doc => {
+      // TODO
+    });
   });
 }
