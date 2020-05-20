@@ -5,12 +5,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-type Project struct {
-	ID    string
-	Title string
-	Slug  string
-}
-
 func projectsCmd(v *viper.Viper) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "projects",
@@ -33,7 +27,7 @@ func listProjects(v *viper.Viper) *cobra.Command {
 		Use:   "list",
 		Short: "List Schole projects",
 		Run: func(_ *cobra.Command, _ []string) {
-			exitOnError(cl.listProjects())
+			cl.listProjects()
 		},
 	}
 
@@ -47,7 +41,7 @@ func createProject(v *viper.Viper) *cobra.Command {
 		Use:   "create",
 		Short: "Create a new Schole docs project",
 		Run: func(_ *cobra.Command, _ []string) {
-			exitOnError(cl.createProject(v))
+			cl.createProject(v)
 		},
 	}
 

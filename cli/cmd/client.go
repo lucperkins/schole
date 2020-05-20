@@ -3,7 +3,6 @@ package cmd
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/machinebox/graphql"
 	"github.com/spf13/viper"
 )
@@ -11,6 +10,12 @@ import (
 type client struct {
 	cl  *graphql.Client
 	ctx context.Context
+}
+
+type project struct {
+	ID    string `json:"id"`
+	Title string `json:"title"`
+	Slug  string `json:"slug"`
 }
 
 func newClient(v *viper.Viper) *client {
@@ -23,43 +28,34 @@ func newClient(v *viper.Viper) *client {
 	}
 }
 
-func (c *client) listProjects() error {
-	type resp struct {
-		FindProjects []struct {
-			ID    string `json:"id"`
-			Title string `json:"title"`
-			Slug  string `json:"slug"`
-		}
+func (c *client) listProjects() {
+	type response struct {
+		Projects []project `json:"findProjects"`
 	}
 
-	var res resp
+	var res response
 
 	req := graphql.NewRequest(`query { findProjects { id title slug } }`)
 
 	if err := c.cl.Run(c.ctx, req, &res); err != nil {
-		return err
+		exitOnError(err)
 	}
 
-	fmt.Println(res)
-
-	return nil
+	printProjects(res.Projects)
 }
 
-func (c *client) createProject(v *viper.Viper) error {
+func (c *client) createProject(v *viper.Viper) {
 	title, slug := v.GetString("title"), v.GetString("slug")
+
 	if title == "" {
-		return errors.New("must supply a title")
+		exitOnError(errors.New("must supply a title"))
 	}
 
-	type resp struct {
-		CreateProject struct {
-			ID    string `json:"id"`
-			Slug  string `json:"slug"`
-			Title string `json:"title"`
-		}
+	type response struct {
+		Project project `json:"createProject"`
 	}
 
-	var res resp
+	var res response
 
 	req := graphql.NewRequest(`mutation ($title: String!, $slug: String) {
 		createProject(project: {title: $title, slug: $slug}) {
@@ -74,10 +70,8 @@ func (c *client) createProject(v *viper.Viper) error {
 	}
 
 	if err := c.cl.Run(c.ctx, req, &res); err != nil {
-		return err
+		exitOnError(err)
 	}
 
-	fmt.Println(res)
-
-	return nil
+	printProject(res.Project)
 }
