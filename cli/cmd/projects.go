@@ -1,9 +1,6 @@
 package cmd
 
 import (
-	"encoding/json"
-	"errors"
-	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -22,34 +19,21 @@ func projectsCmd(v *viper.Viper) *cobra.Command {
 
 	bindPFlags(cmd, clientFlags(), v)
 
-	cmd.AddCommand(listProjects(v), createProject(v))
+	cmd.AddCommand(
+		listProjects(v),
+		createProject(v))
 
 	return cmd
 }
 
 func listProjects(v *viper.Viper) *cobra.Command {
-	url := v.GetString("url")
-	client := NewClient(url)
+	cl := newClient(v)
 
 	cmd := &cobra.Command{
 		Use:   "list",
 		Short: "List Schole projects",
 		Run: func(_ *cobra.Command, _ []string) {
-			q := `findProjects { id title slug }`
-
-			type Response struct {
-				Data struct {
-					FindProjects []Project
-				}
-			}
-
-			var res Response
-
-			exitOnError(client.RunQuery(q, &res))
-
-			for _, p := range res.Data.FindProjects {
-				fmt.Printf("id: %s, title: %s, slug: %s\n", p.ID, p.Title, p.Slug)
-			}
+			exitOnError(cl.listProjects())
 		},
 	}
 
@@ -57,40 +41,13 @@ func listProjects(v *viper.Viper) *cobra.Command {
 }
 
 func createProject(v *viper.Viper) *cobra.Command {
-	url := v.GetString("url")
-	client := NewClient(url)
+	cl := newClient(v)
 
 	cmd := &cobra.Command{
-		Use: "create",
-		PreRun: func(_ *cobra.Command, _ []string) {
-			if v.GetString("title") == "" {
-				exitOnError(errors.New("no title provided"))
-			}
-		},
+		Use:   "create",
+		Short: "Create a new Schole docs project",
 		Run: func(_ *cobra.Command, _ []string) {
-			type Response struct {
-				Data struct {
-					CreateProject struct {
-						ID string
-					}
-				}
-				Errors []ErrorRes
-			}
-
-			var res Response
-
-			mut := fmt.Sprintf("createProject(project:{title:\"%s\"}) { id }",
-				v.GetString("title"))
-			exitOnError(client.RunMutation(mut, &res))
-
-			if res.Errors != nil {
-				js, err := json.Marshal(res.Errors)
-				exitOnError(err)
-
-				fmt.Println(string(js))
-			} else {
-				fmt.Printf("project ID: %s\n", res.Data.CreateProject.ID)
-			}
+			exitOnError(cl.createProject(v))
 		},
 	}
 

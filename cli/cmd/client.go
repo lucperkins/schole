@@ -1,58 +1,83 @@
 package cmd
 
 import (
-	"bytes"
-	"encoding/json"
+	"context"
+	"errors"
 	"fmt"
-	"io/ioutil"
-	"net/http"
-	"time"
+	"github.com/machinebox/graphql"
+	"github.com/spf13/viper"
 )
 
-type Client struct {
-	url     string
-	timeout time.Duration
+type client struct {
+	cl  *graphql.Client
+	ctx context.Context
 }
 
-func NewClient(url string) *Client {
-	return &Client{
-		url:     url,
-		timeout: 10 * time.Second,
+func newClient(v *viper.Viper) *client {
+	url := v.GetString("url")
+	ctx := context.Background()
+
+	return &client{
+		cl:  graphql.NewClient(url),
+		ctx: ctx,
 	}
 }
 
-func (c *Client) RunQuery(query string, obj interface{}) error {
-	q := fmt.Sprintf("query { %s }", query)
+func (c *client) listProjects() error {
+	type resp struct {
+		FindProjects []struct {
+			ID    string `json:"id"`
+			Title string `json:"title"`
+			Slug  string `json:"slug"`
+		}
+	}
 
-	return c.run(q, obj)
-}
+	var res resp
 
-func (c *Client) RunMutation(mutation string, obj interface{}) error {
-	q := fmt.Sprintf("mutation { %s }", mutation)
+	req := graphql.NewRequest(`query { findProjects { id title slug } }`)
 
-	return c.run(q, obj)
-}
-
-func (c *Client) run(query string, obj interface{}) error {
-	bs := bytes.NewBuffer([]byte(query))
-
-	req, err := http.NewRequest(http.MethodPost, c.url, bs)
-	if err != nil {
+	if err := c.cl.Run(c.ctx, req, &res); err != nil {
 		return err
 	}
 
-	cl := &http.Client{Timeout: c.timeout}
-	res, err := cl.Do(req)
-	if err != nil {
+	fmt.Println(res)
+
+	return nil
+}
+
+func (c *client) createProject(v *viper.Viper) error {
+	title, slug := v.GetString("title"), v.GetString("slug")
+	if title == "" {
+		return errors.New("must supply a title")
+	}
+
+	type resp struct {
+		CreateProject struct {
+			ID    string `json:"id"`
+			Slug  string `json:"slug"`
+			Title string `json:"title"`
+		}
+	}
+
+	var res resp
+
+	req := graphql.NewRequest(`mutation ($title: String!, $slug: String) {
+		createProject(project: {title: $title, slug: $slug}) {
+			id slug title
+		}
+	}`)
+
+	req.Var("title", title)
+
+	if slug != "" {
+		req.Var("slug", slug)
+	}
+
+	if err := c.cl.Run(c.ctx, req, &res); err != nil {
 		return err
 	}
 
-	defer res.Body.Close()
+	fmt.Println(res)
 
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return err
-	}
-
-	return json.Unmarshal(body, obj)
+	return nil
 }

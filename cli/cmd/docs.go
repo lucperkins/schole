@@ -116,7 +116,7 @@ func parseFile(path string) (*Document, error) {
 	}
 
 	doc := Document{
-		Url: getUrl(path),
+		Url:     getUrl(path),
 		Content: body,
 	}
 
