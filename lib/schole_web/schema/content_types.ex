@@ -13,7 +13,7 @@ defmodule ScholeWeb.Schema.ContentTypes do
     field :title, non_null(:string)
 
     @desc "The URL for the document within the project, e.g. /deploy/kubernetes"
-    field :url, non_null(:string)
+    field :url, :string
 
     @desc "A description for the document"
     field :description, :string
@@ -30,9 +30,9 @@ defmodule ScholeWeb.Schema.ContentTypes do
 
   input_object :new_document do
     field :title, non_null(:string)
-    field :url, non_null(:string)
-    field :description, :string
     field :content, non_null(:string)
+    field :url, :string
+    field :description, :string
     field :metadata, :json
     field :tags, list_of(:string)
   end

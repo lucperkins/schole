@@ -3,7 +3,6 @@ defmodule Schole.Documents do
 
   alias Schole.Repo
   alias Schole.Documents.Document
-  alias Schole.Projects
   alias Schole.Search
 
   def all() do
@@ -26,20 +25,13 @@ defmodule Schole.Documents do
     Repo.get(Document, id)
   end
 
-  def create(%{document: document, project_id: project_id}) do
-    case Projects.get(project_id) do
-      nil ->
-        {:error, "Project with ID #{project_id} not found"}
-
-      project ->
-        changeset =
-          %Document{}
-          |> Document.create_changeset(document, project)
-
-        case Repo.insert(changeset) do
-          {:ok, document} -> index(document)
-          {:error, reason} -> {:error, reason}
-        end
+  def create(attrs \\ %{}) do
+    attrs
+    |> Document.create_changeset()
+    |> Repo.insert()
+    |> case do
+      {:ok, document} -> index(document)
+      {:error, reason} -> {:error, reason}
     end
   end
 

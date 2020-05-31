@@ -69,39 +69,6 @@ But this approach runs into hard limits when your needs extend beyond the single
 
 Schole provides a single, centralized storage system for *all* of the information associated with an *indefinite number* of software projects. This information currently includes only one type of data: Markdown documents and the associated metadata and tags. But Schole can in principle expand to support all kinds of data, such as release notes, changelogs, arbitrary key/value info, concept lists, FAQs, event info, community and social media links, [OpenAPI] specs, [Protocol Buffers][protobuf] documentation, language-specific API docs, and so on.
 
-### GraphQL interface
-
-All Schole data is accessible via a [GraphQL] interface that enables you to run queries like this:
-
-```graphql
-query {
-  findProject(slug: "my-docs-project") {
-    title
-    description
-    metadata
-    documents {
-      title
-      tags
-      content
-    }
-  }
-}
-```
-
-This `findProject` query would return some project-level info for `my-docs-project` as well as the documents associated with the project as a single JSON object. That information could be used, for example, by a [Gatsby] theme to build the project website.
-
-If you wanted to create a landing page for all of your projects, you could use a query like this:
-
-```graphql
-query {
-  projects {
-    title
-    description
-    slug
-  }
-}
-```
-
 ### Full interface definition
 
 The GraphQL interface provided by Schole is defined in [`schema.graphql`](./schema.graphql).
