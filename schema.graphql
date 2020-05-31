@@ -3,26 +3,6 @@ schema {
   mutation: RootMutationType
 }
 
-input NewReleaseNote {
-  version: String!
-  notes: String!
-}
-
-"Version-specific notes for the Schole project"
-type ReleaseNote {
-  "The release notes' unique identifier"
-  id: ID!
-
-  "The project version associated with the release notes"
-  version: String!
-
-  "The notes content for this version of the project"
-  notes: String!
-
-  "The project under which the release notes exist"
-  project: Project
-}
-
 "The core document type for Schole documentation"
 type Document {
   "The document's unique identifier"
@@ -45,9 +25,6 @@ type Document {
 
   "Descriptive tags for indexing the document"
   tags: [String]
-
-  "The project under which the document exists"
-  project: Project
 }
 
 input NewDocument {
@@ -63,65 +40,19 @@ input NewDocument {
 scalar Json
 
 type RootMutationType {
-  "Create a new project"
-  createProject(project: NewProject!): Project
-
-  "Delete a project"
-  deleteProject(id: ID!): Project
-
   "Create a new document"
-  createDocument(document: NewDocument!, projectId: ID!): Document
+  createDocument(document: NewDocument!): Document
 
   "Delete a document"
   deleteDocument(id: ID!): Document
-
-  "Create release notes"
-  createReleaseNotes(releaseNote: NewReleaseNote!, projectId: ID!): ReleaseNote
-
-  "Delete release notes"
-  deleteReleaseNotes(id: ID!): ReleaseNote
 }
 
 type RootQueryType {
-  "Find a project via some combination of ID, title, slug, and tags"
-  findProjects(tags: [String], slug: String, title: String, id: ID): [Project]
-
   "Find documents via some combination of title, tags, or text query string"
   findDocuments(query: String, tags: [String], title: String): [Document]
 
-  "Find release notes (all or for a specific project)"
-  findReleaseNotes(projectId: ID): [ReleaseNote]
+  searchDocuments(query: String!): [Document]
 
   "Fetch a specific document by ID"
   getDocument(id: ID): Document
-}
-
-"A Schole documentation project"
-type Project {
-  "The project's unique identifier"
-  id: ID!
-
-  "The unique slug for the project, e.g. my-docs-project"
-  slug: String!
-
-  "The unique title for the project, e.g. 'My Docs Project'"
-  title: String!
-
-  "Key-value metadata associated with the project"
-  metadata: Json
-
-  "Descriptive tags for indexing the project"
-  tags: [String]
-
-  "The documents associated with the project"
-  documents: [Document]
-
-  "Release notes associated with the project"
-  releaseNotes: [ReleaseNote]
-}
-
-input NewProject {
-  title: String!
-  slug: String
-  metadata: Json
 }
