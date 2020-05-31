@@ -6,6 +6,10 @@ defmodule Schole.Documents do
   alias Schole.Projects
   alias Schole.Search
 
+  def all() do
+    find(%{})
+  end
+
   def find(args) when args == %{} do
     Repo.all(Document)
   end
