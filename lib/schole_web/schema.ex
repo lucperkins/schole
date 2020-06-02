@@ -10,8 +10,8 @@ defmodule ScholeWeb.Schema do
     @desc "Find documents via some combination of title, tags, or text query string"
     field :find_documents, list_of(:document) do
       arg(:title, :string)
+      arg(:description, :string)
       arg(:tags, list_of(:string))
-      arg(:query, :string)
 
       resolve(&DocumentsResolver.find/3)
     end
