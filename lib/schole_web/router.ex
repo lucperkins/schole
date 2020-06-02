@@ -23,12 +23,5 @@ defmodule ScholeWeb.Router do
       interface: :playground
 
     forward "/", Absinthe.Plug, schema: Schema
-
-    # get "/", PageController, :index
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", ScholeWeb do
-  #   pipe_through :api
-  # end
 end

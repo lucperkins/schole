@@ -20,8 +20,8 @@ config :schole, ScholeWeb.Endpoint,
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/schole/(documents,projects).(ex)$",
-      ~r"lib/schole/(documents|projects)/.*(ex)$",
+      ~r"lib/schole/(documents).(ex)$",
+      ~r"lib/schole/(documents)/.*(ex)$",
       ~r"lib/schole_web/(live|views)/.*(ex)$",
       ~r"lib/schole_web/templates/.*(eex)$"
     ]
