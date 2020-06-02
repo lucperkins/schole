@@ -25,6 +25,7 @@ defmodule Schole.Search do
     driver.index(document)
   end
 
+  @spec select_search_driver() :: Search
   defp select_search_driver() do
     Application.get_env(:schole, __MODULE__, @default_driver)
   end
