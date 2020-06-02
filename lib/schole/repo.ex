@@ -1,6 +1,8 @@
 defmodule Schole.Repo do
   import Ecto.Query
 
+  alias Schole.Search
+
   use Ecto.Repo,
     otp_app: :schole,
     adapter: Ecto.Adapters.Postgres
@@ -11,17 +13,19 @@ defmodule Schole.Repo do
     end
   end
 
+  def find_query(:query, _queryable, query) do
+    {:ok, documents} = Search.search(query)
+    documents
+  end
+
   def find_query(:tags, queryable, tags),
     do: where(queryable, ^dynamic([m], contains_all(m.tags, ^tags)))
 
-  def find_query(:query, queryable, query),
-    do: where(queryable, ^dynamic([m], ilike(m.content, ^"%#{query}%")))
-
   def find_query(:description, queryable, description),
-    do: where(queryable, ^dynamic([m], ilike(m.description, ^"#{description}%") ))
+    do: where(queryable, ^dynamic([m], ilike(m.description, ^"#{description}%")))
 
-  def find_query(key, queryable, val),
-    do: where(queryable, ^dynamic([m], field(m, ^key) == ^val))
+  #def find_query(key, queryable, val),
+  #  do: where(queryable, ^dynamic([m], field(m, ^key) == ^val))
 
   def by_ids(query, ids),
     do:
