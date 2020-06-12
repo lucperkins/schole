@@ -5,15 +5,12 @@ defmodule Schole.Documents.Document do
   import Ecto.Changeset
 
   alias Schole.Documents.Document
-  alias Schole.Helpers
 
   @required ~w(title content)a
-  @optional ~w(description metadata tags url)a
-  @url_regex ~r/^\/([A-z0-9-_+]+\/)*([A-z0-9]+)$/
+  @optional ~w(description metadata tags)a
 
   schema "documents" do
     field :title, :string, null: false
-    field :url, :string
     field :description, :string
     field :content, :string, null: false
     field :metadata, :map, default: %{}
@@ -24,7 +21,5 @@ defmodule Schole.Documents.Document do
     %Document{}
     |> cast(attrs, @required ++ @optional)
     |> validate_required(@required)
-    |> Helpers.format_url()
-    |> validate_format(:url, @url_regex, message: "Invalid URL (must be of the form /a/b/c)")
   end
 end

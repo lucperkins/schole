@@ -11,9 +11,6 @@ type Document {
   "The title for the document, e.g. 'Deployment Guide'"
   title: String!
 
-  "The URL for the document within the project, e.g. /deploy/kubernetes"
-  url: String
-
   "A description for the document"
   description: String
 
@@ -30,7 +27,6 @@ type Document {
 input NewDocument {
   title: String!
   content: String!
-  url: String
   description: String
   metadata: Json
   tags: [String]

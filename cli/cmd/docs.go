@@ -16,17 +16,19 @@ import (
 var allowedExtensions = []string{".md"}
 
 type Document struct {
-	Url         string
-	Title       string
-	Description string
-	Tags        []string
-	Content     string
+	ID          string                 `json:"id"`
+	Title       string                 `json:"title"`
+	Description string                 `json:"description,omitempty"`
+	Tags        []string               `json:"tags,omitempty"`
+	Content     string                 `json:"content"`
+	Metadata    map[string]interface{} `json:"metadata,omitempty"`
 }
 
 type Metadata struct {
 	Title       string
 	Description string
 	Tags        []string
+	Metadata    map[string]interface{}
 }
 
 func docsCmd(v *viper.Viper) *cobra.Command {
@@ -44,13 +46,15 @@ func docsCmd(v *viper.Viper) *cobra.Command {
 }
 
 func syncDocs(v *viper.Viper) *cobra.Command {
+	cl := newClient(v)
+
 	dir := v.GetString("dir")
 
 	cmd := &cobra.Command{
 		Use:   "sync",
 		Short: "Sync the local docs directory with the Schole API",
 		Run: func(_ *cobra.Command, _ []string) {
-			errs := syncDirectory(dir)
+			errs := syncDirectory(dir, cl)
 
 			if len(errs) > 0 {
 				fmt.Println("multiple errors")
@@ -63,7 +67,7 @@ func syncDocs(v *viper.Viper) *cobra.Command {
 	return cmd
 }
 
-func syncDirectory(dir string) []error {
+func syncDirectory(dir string, cl *client) []error {
 	errs := make([]error, 0)
 
 	exitOnError(filepath.Walk(dir, func(path string, info os.FileInfo, _ error) error {
@@ -71,7 +75,7 @@ func syncDirectory(dir string) []error {
 			doc, err := parseFile(path)
 			exitOnError(err)
 
-			fmt.Println(doc.Tags)
+			cl.createDocument(doc)
 		}
 
 		return nil
@@ -116,7 +120,6 @@ func parseFile(path string) (*Document, error) {
 	}
 
 	doc := Document{
-		Url:     getUrl(path),
 		Content: body,
 	}
 
@@ -135,6 +138,10 @@ func applyMetadataToDoc(doc *Document, meta *Metadata) {
 	if meta.Description != "" {
 		doc.Description = meta.Description
 	}
+
+	if meta.Metadata != nil {
+		doc.Metadata = meta.Metadata
+	}
 }
 
 func validateMetadata(m *Metadata, path string) error {
@@ -143,14 +150,6 @@ func validateMetadata(m *Metadata, path string) error {
 	}
 
 	return nil
-}
-
-func getUrl(path string) string {
-	if !strings.HasPrefix(path, "/") {
-		path = fmt.Sprintf("/%s", path)
-	}
-
-	return path
 }
 
 func hasAllowedExtension(path string) bool {

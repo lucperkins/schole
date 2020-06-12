@@ -15,7 +15,7 @@ func rootCmd() *cobra.Command {
 		Short: "A headless CMS for technical documentation",
 	}
 
-	cmd.AddCommand(projectsCmd(v), docsCmd(v))
+	cmd.AddCommand(docsCmd(v))
 
 	return cmd
 }

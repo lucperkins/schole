@@ -25,8 +25,8 @@ defmodule Schole.Documents do
     Repo.get(Document, id)
   end
 
-  def create(attrs \\ %{}) do
-    attrs
+  def create(%{document: document}) do
+    document
     |> Document.create_changeset()
     |> Repo.insert()
     |> case do
@@ -50,7 +50,7 @@ defmodule Schole.Documents do
     |> Repo.all()
   end
 
-  def index(%Document{} = document) do
+  def index(document) do
     Search.index(document)
   end
 end
