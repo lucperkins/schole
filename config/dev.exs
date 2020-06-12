@@ -14,7 +14,6 @@ config :schole, ScholeWeb.Endpoint,
   code_reloader: true,
   check_origin: false
 
-
 config :schole, ScholeWeb.Endpoint,
   live_reload: [
     patterns: [

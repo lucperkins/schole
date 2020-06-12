@@ -5,6 +5,7 @@ defmodule Schole.Documents do
   alias Schole.Documents.Document
   alias Schole.Search
 
+  @type all() :: [Document]
   def all() do
     find(%{})
   end
@@ -25,8 +26,8 @@ defmodule Schole.Documents do
     Repo.get(Document, id)
   end
 
-  def create(attrs \\ %{}) do
-    attrs
+  def create(%{document: document}) do
+    document
     |> Document.create_changeset()
     |> Repo.insert()
     |> case do
@@ -35,6 +36,7 @@ defmodule Schole.Documents do
     end
   end
 
+  @spec delete(Ecto.UUID) :: {:ok, Document} | {:error, term}
   def delete(id) do
     case get(id) do
       nil -> {:error, :not_found}
@@ -42,6 +44,7 @@ defmodule Schole.Documents do
     end
   end
 
+  @spec by_ids([String]) :: [Document]
   def by_ids(ids) when ids == [], do: []
 
   def by_ids(ids) do
@@ -50,12 +53,13 @@ defmodule Schole.Documents do
     |> Repo.all()
   end
 
-
+  @spec search(String) :: [Document]
   def search(query) do
     Search.search(query)
   end
 
-  def index(%Document{} = document) do
+  @spec index(Document) :: {:ok, Document} | {:error, term}
+  def index(document) do
     Search.index(document)
   end
 end

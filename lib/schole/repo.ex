@@ -24,7 +24,7 @@ defmodule Schole.Repo do
   def find_query(:description, queryable, description),
     do: where(queryable, ^dynamic([m], ilike(m.description, ^"#{description}%")))
 
-  #def find_query(key, queryable, val),
+  # def find_query(key, queryable, val),
   #  do: where(queryable, ^dynamic([m], field(m, ^key) == ^val))
 
   def by_ids(query, ids),
