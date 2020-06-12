@@ -18,14 +18,6 @@ func docsFlags() *pflag.FlagSet {
 	return flags
 }
 
-func createProjectFlags() *pflag.FlagSet {
-	flags := pflag.NewFlagSet("create-project", pflag.ExitOnError)
-	flags.StringP("title", "t", "", "Project title")
-	flags.StringP("slug", "s", "", "Project slug")
-	flags.StringP("description", "d", "", "Project description")
-	return flags
-}
-
 func bindFlags(cmd *cobra.Command, flags *pflag.FlagSet, v *viper.Viper) {
 	cmd.Flags().AddFlagSet(flags)
 	exitOnError(v.BindPFlags(flags))

@@ -7,6 +7,7 @@ require (
 	github.com/go-openapi/strfmt v0.19.5 // indirect
 	github.com/jedib0t/go-pretty v4.3.0+incompatible
 	github.com/machinebox/graphql v0.2.2
+	github.com/matryer/is v1.3.0 // indirect
 	github.com/mattn/go-runewidth v0.0.9 // indirect
 	github.com/mitchellh/mapstructure v1.3.0
 	github.com/pkg/errors v0.9.1 // indirect
