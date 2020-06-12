@@ -13,5 +13,6 @@ defmodule Schole.Helpers do
         changeset
     end
   end
+
   def format_url(changeset), do: changeset
 end

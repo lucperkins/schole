@@ -7,16 +7,17 @@ defmodule ScholeWeb.Schema do
   alias ScholeWeb.Resolvers.DocumentsResolver
 
   query do
-    @desc "Find documents via some combination of title, tags, or text query string"
+    @desc "Find documents via some combination of title, description, tags, and/or search term"
     field :find_documents, list_of(:document) do
       arg(:title, :string)
+      arg(:description, :string)
       arg(:tags, list_of(:string))
       arg(:query, :string)
 
       resolve(&DocumentsResolver.find/3)
     end
 
-    @desc "Search documents using a search query string"
+    @desc "Search for documents based on a query string"
     field :search_documents, list_of(:document) do
       arg(:query, non_null(:string))
 

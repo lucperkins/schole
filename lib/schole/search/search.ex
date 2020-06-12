@@ -5,13 +5,9 @@ defmodule Schole.Search do
 
   alias Schole.Documents.Document
 
-  @type query :: String
-  @type documents :: [Document]
-  @type document :: Document
+  @callback search(String) :: [Document]
 
-  @callback search(query) :: documents
-
-  @spec search(query) :: documents
+  @spec search(String) :: [Document]
   def search(query) when query == "", do: []
 
   def search(query) do
@@ -19,12 +15,13 @@ defmodule Schole.Search do
     driver.search(query)
   end
 
-  @spec index(document) :: {:ok, document} | {:error, term}
+  @spec index(Document) :: {:ok, Document} | {:error, term}
   def index(document) do
     driver = select_search_driver()
     driver.index(document)
   end
 
+  @spec select_search_driver() :: Search
   defp select_search_driver() do
     Application.get_env(:schole, __MODULE__, @default_driver)
   end

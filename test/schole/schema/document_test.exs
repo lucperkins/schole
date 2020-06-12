@@ -8,12 +8,12 @@ defmodule Schole.Schema.DocumentTest do
     title: "Some doc title",
     content: "Some doc content",
     url: "/deploy",
-    metadata: @meta,
+    metadata: @meta
   }
   @no_title %{
     content: "Some doc content",
     url: "/deploy",
-    metadata: @meta,
+    metadata: @meta
   }
   @no_content %{title: "Some doc title", url: "/deploy", metadata: @meta}
 

@@ -8,6 +8,11 @@ defmodule Schole.Search.Algolia do
   alias Schole.Documents
   alias Schole.Documents.Document
 
+  @type query :: String
+  @type documents :: [Document]
+  @type document :: Document
+
+  @spec search(query) :: documents
   def search(query) do
     case Algolia.search(@namespace, query, []) do
       {:ok, res} -> handle_response(res)
@@ -15,6 +20,7 @@ defmodule Schole.Search.Algolia do
     end
   end
 
+  @spec index(document) :: {:ok, document} | {:error, term}
   def index(%Document{id: id} = document) do
     case Algolia.save_object(@namespace, document_item(document), id) do
       {:ok, _} -> {:ok, document}

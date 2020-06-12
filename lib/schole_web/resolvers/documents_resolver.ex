@@ -2,7 +2,6 @@ defmodule ScholeWeb.Resolvers.DocumentsResolver do
   @moduledoc false
 
   alias Schole.Documents
-  alias Schole.Search
   alias ScholeWeb.Resolvers.Helpers
 
   def find(_parent, args, _resolution) do
@@ -24,7 +23,7 @@ defmodule ScholeWeb.Resolvers.DocumentsResolver do
   end
 
   def search(_parent, %{query: query}, _resolution) do
-    documents = Search.search(query)
+    documents = Documents.search(query)
     {:ok, documents}
   end
 end

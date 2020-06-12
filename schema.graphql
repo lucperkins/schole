@@ -44,9 +44,10 @@ type RootMutationType {
 }
 
 type RootQueryType {
-  "Find documents via some combination of title, tags, or text query string"
-  findDocuments(query: String, tags: [String], title: String): [Document]
+  "Find documents via some combination of title, description, tags, and/or search term"
+  findDocuments(query: String, tags: [String], description: String, title: String): [Document]
 
+  "Search for documents based on a query string"
   searchDocuments(query: String!): [Document]
 
   "Fetch a specific document by ID"

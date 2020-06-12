@@ -11,7 +11,7 @@ defmodule Schole.Documents.DocumentsTest do
   @no_content %{
     title: "Some document title",
     url: "/intro",
-    metadata: @meta,
+    metadata: @meta
   }
 
   describe "documents" do
@@ -20,7 +20,8 @@ defmodule Schole.Documents.DocumentsTest do
     end
 
     test "create/1 succesfully creates a Document when attributes are valid" do
-      assert {:ok, %Document{} = document} = Documents.create(@valid)
+      new_doc = %{document: @valid}
+      assert {:ok, %Document{} = document} = Documents.create(new_doc)
       assert document.url == @valid.url
       assert document.title == @valid.title
       assert document.content == @valid.content
@@ -29,12 +30,14 @@ defmodule Schole.Documents.DocumentsTest do
     end
 
     test "create/1 fails on missing title" do
-      assert {:error, %Ecto.Changeset{} = changeset} = Documents.create(@no_title)
+      new_doc = %{document: @no_title}
+      assert {:error, %Ecto.Changeset{} = changeset} = Documents.create(new_doc)
       expect_invalid(changeset, %{title: ["can't be blank"]})
     end
 
     test "create/1 fails on missing content" do
-      assert {:error, %Ecto.Changeset{} = changeset} = Documents.create(@no_content)
+      new_doc = %{document: @no_content}
+      assert {:error, %Ecto.Changeset{} = changeset} = Documents.create(new_doc)
       expect_invalid(changeset, %{content: ["can't be blank"]})
     end
   end
