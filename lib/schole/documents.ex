@@ -50,7 +50,6 @@ defmodule Schole.Documents do
     |> Repo.all()
   end
 
-
   def search(query) do
     Search.search(query)
   end

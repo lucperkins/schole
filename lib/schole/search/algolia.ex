@@ -39,7 +39,12 @@ defmodule Schole.Search.Algolia do
     Documents.by_ids(document_ids)
   end
 
-  defp document_item(%Document{title: title, description: description, tags: tags, content: content}) do
+  defp document_item(%Document{
+         title: title,
+         description: description,
+         tags: tags,
+         content: content
+       }) do
     %{
       title: title,
       description: description,
